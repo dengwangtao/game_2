@@ -2,3 +2,4 @@ thirdparty/glm
 thirdparty/SDL_mixer
 assets/
 build/
+bin/

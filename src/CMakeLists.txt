@@ -19,6 +19,15 @@ if (MSVC)
 endif()
 
 
+target_include_directories(${TARGET} PRIVATE
+    ${CMAKE_SOURCE_DIR}/thirdparty/spdlog
+)
+
+target_compile_definitions(${TARGET} PRIVATE
+    # SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
+    SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG
+)
+
 target_link_libraries(
     ${TARGET}
         ${SDL3_LIBRARIES} # 在sdl3-config.cmake中定义的变量

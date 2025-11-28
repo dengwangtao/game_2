@@ -62,6 +62,9 @@ int main(int, char**) {
 
     // Do something with the window and renderer here...
     // 渲染循环
+
+    auto mouse_pos = glm::vec2(0, 0);
+
     while (true) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
@@ -70,8 +73,22 @@ int main(int, char**) {
             }
         }
 
+
         // 清屏
         SDL_RenderClear(renderer);
+
+        auto state = SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+        {
+            auto getbit = [](int c, int i) { return (c & (1 << i)) ? 255 : 128; };
+
+            SDL_Color color = {getbit(state, 0), getbit(state, 1), getbit(state, 2), 255}; // 默认灰色
+
+            SDL_FRect rect = {mouse_pos.x - 20, mouse_pos.y - 20, 40, 40};
+            SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+            SDL_RenderFillRect(renderer, &rect);
+        }
+
+
         // 画一个长方形
         SDL_FRect rect = {100, 100, 200, 200};
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);

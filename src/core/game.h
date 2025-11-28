@@ -1,0 +1,33 @@
+#pragma once
+
+#include <string>
+
+#include "comm/singleton.h"
+#include "comm/comm_def.h"
+
+
+struct SDL_Window;
+struct SDL_Renderer;
+
+class Game : public Singleton<Game>
+{
+public:
+    s32 init(const String& title, int width, int height);
+    s32 run();
+    s32 handle_events();
+    s32 update(s64 now_ms);
+    s32 render();
+    s32 clean();
+
+private:
+    Vec2 screen_size_ = Vec2{0};
+    bool is_running_ = true;
+    SDL_Window* window_ = nullptr;
+    SDL_Renderer* renderer_ = nullptr;
+    
+    const u64 fps_ = 60;
+    const u64 frame_duration_ = NS_PER_SEC / fps_; // in ns
+    f64 dt_ = 0;
+    u64 last_frame_ns_ = 0;
+
+};
