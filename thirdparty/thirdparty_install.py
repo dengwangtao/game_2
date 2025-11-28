@@ -116,9 +116,6 @@ if __name__ == '__main__':
     ps = install_glm(release=True)
     need_add_env_pathes.extend(ps)
 
-    ps = install_sdl3_mixer(release=True)
-    need_add_env_pathes.extend(ps)
-
     print("All thirdparty environment installed successfully.")
     print("Please add the following environment variables to your system PATH:")
     for p in need_add_env_pathes:
