@@ -9,6 +9,8 @@
 struct SDL_Window;
 struct SDL_Renderer;
 
+class Scene;
+
 class Game : public Singleton<Game>
 {
 public:
@@ -30,4 +32,6 @@ private:
     f64 dt_ = 0;
     u64 last_frame_ns_ = 0;
 
+
+    Scene* curr_scene_ = nullptr;
 };

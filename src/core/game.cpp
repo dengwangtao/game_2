@@ -4,6 +4,7 @@
 #include <SDL3_mixer/SDL_mixer.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include "comm/log_def.h"
+#include "scene_main.h"
 
 
 s32 Game::init(const String &title, int width, int height)
@@ -56,6 +57,10 @@ s32 Game::init(const String &title, int width, int height)
     SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
 
+    // 创建场景
+    curr_scene_ = new SceneMain();
+    curr_scene_->init();
+
     LOG_INFO("Game [{}] initialized", title);
 
     return 0;
@@ -106,36 +111,62 @@ s32 Game::handle_events()
         {
             is_running_ = false;
         }
+
+        if (curr_scene_)
+        {
+            curr_scene_->handle_events(event);
+        }
     }
     return 0;
 }
 
 s32 Game::update(s64 now_ms)
 {
+    if (curr_scene_)
+    {
+        curr_scene_->update(now_ms);
+    }
     return 0;
 }
 
 s32 Game::render()
 {
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
     // 清屏
     SDL_RenderClear(renderer_);
-
-    auto mouse_pos = Vec2(0, 0);
-
-    auto state = SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+    if (curr_scene_)
     {
-        auto getbit = [](int c, int i) ->u8 { return (c & (1 << i)) ? 255 : 128; };
-
-        SDL_Color color = {getbit(state, 0), getbit(state, 1), getbit(state, 2), 255}; // 默认灰色
-        SDL_FRect rect = {mouse_pos.x - 20, mouse_pos.y - 20, 40, 40};
-        SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
-        SDL_RenderFillRect(renderer_, &rect);
+        curr_scene_->render();
     }
+
+    // TODO: 测试代码, 后面需要删除
+    {
+        auto mouse_pos = Vec2(0, 0);
+
+        auto state = SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+        {
+            auto getbit = [](int c, int i) ->u8 { return (c & (1 << i)) ? 255 : 128; };
+
+            SDL_Color color = {getbit(state, 0), getbit(state, 1), getbit(state, 2), 255}; // 默认灰色
+            SDL_FRect rect = {mouse_pos.x - 20, mouse_pos.y - 20, 40, 40};
+            SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+            SDL_RenderFillRect(renderer_, &rect);
+        }
+    }
+
+    SDL_RenderPresent(renderer_);
     return 0;
 }
 
 s32 Game::clean()
 {
+    if (curr_scene_)
+    {
+        curr_scene_->clean();
+        delete curr_scene_;
+        curr_scene_ = nullptr;
+    }
+
     if (renderer_)
     {
         SDL_DestroyRenderer(renderer_);
