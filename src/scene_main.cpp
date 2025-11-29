@@ -43,5 +43,12 @@ s32 SceneMain::render_background()
         Color{255, 255, 255, 255}
     );
 
+    game_.draw_boundary(
+        start,
+        end,
+        10,
+        Color{255, 0, 0, 255}
+    );
+
     return 0;
 }

@@ -213,3 +213,22 @@ s32 Game::draw_grid(const Vec2 &top_left, const Vec2 &bottom_right, const Vec2 &
     return 0;
 }
 
+s32 Game::draw_boundary(const Vec2 &top_left, const Vec2 &bottom_right, f32 thickness, const Color &color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+
+    for (f32 i = 0; i < thickness; i += 1)
+    {
+        SDL_FRect rect = {
+                top_left.x - i,
+                top_left.y - i,
+                bottom_right.x - top_left.x + i * 2,
+                bottom_right.y - top_left.y + i * 2
+        };
+        SDL_RenderRect(renderer_, &rect);
+    }
+
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+
+    return 0;
+}
