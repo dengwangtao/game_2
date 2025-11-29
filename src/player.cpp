@@ -2,6 +2,7 @@
 #include "comm/log_def.h"
 #include "core/scene.h"
 #include <SDL3/SDL.h>
+#include "resource_mgr.h"
 
 s32 Player::init()
 {
@@ -24,6 +25,8 @@ s32 Player::update(s64 now_ms, s64 delta_ms)
 
 s32 Player::render()
 {
+    auto* ttt = G_RESOURCE_MGR.loadResource<SDL_Texture>("../assets/sprite/ghost-idle.png");
+
     auto aabb = game_.GetCameraAABB();
 
     LOG_TRACE("camera aabb=[{},{},{},{}], player pos=[{},{}]",

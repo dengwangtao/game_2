@@ -33,6 +33,11 @@ public:
 
     // 获取相机视野范围
     std::pair<Vec2, Vec2> GetCameraAABB() const;
+
+
+    SDL_Window* get_window() const { return window_; }
+    SDL_Renderer* get_renderer() const { return renderer_; }
+
 private:
     Vec2 screen_size_ = Vec2{0};
     bool is_running_ = true;
@@ -47,3 +52,6 @@ private:
 
     Scene* curr_scene_ = nullptr;
 };
+
+
+#define G_GAME Game::Instance()
