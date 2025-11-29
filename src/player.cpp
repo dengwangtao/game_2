@@ -88,11 +88,16 @@ s32 Player::move(s64 delta_ms)
 
 s32 Player::sync_camera()
 {
+    constexpr f32 camera_out_margin = 60;
+
     auto* scene = game_.get_curr_scene();
     if (scene)
     {
         auto p = pos() - game_.get_screen_size() / 2.0f;
-        p = glm::clamp(p, Vec2(-30), Vec2(30) + scene->get_world_size() - game_.get_screen_size());
+        p = glm::clamp(p,
+            Vec2(-camera_out_margin),
+            Vec2(camera_out_margin) + scene->get_world_size() - game_.get_screen_size()
+        );
         scene->set_camera_pos(p);
     }
 
