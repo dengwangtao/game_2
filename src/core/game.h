@@ -21,6 +21,12 @@ public:
     s32 render();
     s32 clean();
 
+
+    // 背景网格
+    s32 draw_grid(const Vec2& top_left, const Vec2& bottom_right, const Vec2& cell_size, const Color& color);
+
+    Vec2 get_screen_size() const { return screen_size_; }
+
 private:
     Vec2 screen_size_ = Vec2{0};
     bool is_running_ = true;

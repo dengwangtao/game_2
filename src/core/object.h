@@ -18,6 +18,6 @@ public:
     virtual s32 clean() { return 0; }
 
 protected:
-    Game& game = Game::Instance();
+    Game& game_ = Game::Instance();
 
 };

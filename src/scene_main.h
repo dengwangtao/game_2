@@ -11,4 +11,9 @@ public:
     s32 update(s64 now_ms) override;
     s32 render() override;
     s32 clean() override;
+
+private:
+    s32 render_background();
+
+    Vec2 world_size_ = Vec2{0};
 };

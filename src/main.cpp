@@ -12,7 +12,7 @@ int main(int, char**)
     logdef::init_log();
 
     auto& g = Game::Instance();
-    s32 ret = g.init("ghost escape", 800, 600);
+    s32 ret = g.init("ghost escape", 1280, 720);
     if (ret)
     {
         LOG_ERROR("Game initialization failed with error code {}", ret);

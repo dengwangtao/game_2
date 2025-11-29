@@ -5,6 +5,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "comm/log_def.h"
 #include "scene_main.h"
+#include "game.h"
 
 
 s32 Game::init(const String &title, int width, int height)
@@ -188,3 +189,27 @@ s32 Game::clean()
 
     return 0;
 }
+
+s32 Game::draw_grid(const Vec2 &top_left, const Vec2 &bottom_right, const Vec2 &cell_size, const Color &color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+
+    f32 x = top_left.x;
+    while (x <= bottom_right.x)
+    {
+        SDL_RenderLine(renderer_, x, top_left.y, x, bottom_right.y);
+        x += cell_size.x;
+    }
+
+    f32 y = top_left.y;
+    while (y <= bottom_right.y)
+    {
+        SDL_RenderLine(renderer_, top_left.x, y, bottom_right.x, y);
+        y += cell_size.y;
+    }
+
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+
+    return 0;
+}
+

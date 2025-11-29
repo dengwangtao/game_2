@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <glm/glm.hpp>
+#include <SDL3/SDL_pixels.h>
 
 using s32 = int32_t;
 using u32 = uint32_t;
@@ -24,6 +25,9 @@ using Vec4 = glm::vec4;
 
 using Point2 = Vec2;
 using Point3 = Vec3;
+
+using Color = SDL_Color;
+using FColor = SDL_FColor;
 
 
 #define NS_PER_MS 1000000ULL

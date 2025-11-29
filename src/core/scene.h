@@ -17,7 +17,7 @@ public:
     s32 render() override { return 0; }
     s32 clean() override { return 0; }
 
-private:
+protected:
     Vec2 camera_pos_ = Vec2{0};
     std::vector<Object*> objects_;
 };
