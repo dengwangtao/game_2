@@ -7,9 +7,10 @@ class ObjectWorld : public ObjectScreen
 {
 public:
 
-    s32 update(s64 now_ms) override;
+    s32 update(s64 now_ms, s64 delta_ms) override;
 
     void set_world_pos(const Vec2& pos);
+    void set_pos(const Vec2& pos) { set_world_pos(pos); }
     const Vec2& get_world_pos() const { return world_pos_; }
     const Vec2& pos() const { return world_pos_; }
 

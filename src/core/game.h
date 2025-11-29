@@ -17,7 +17,7 @@ public:
     s32 init(const String& title, int width, int height);
     s32 run();
     s32 handle_events();
-    s32 update(s64 now_ms);
+    s32 update(s64 now_ms, s64 delta_ms);
     s32 render();
     s32 clean();
 
@@ -26,9 +26,13 @@ public:
     s32 draw_grid(const Vec2& top_left, const Vec2& bottom_right, const Vec2& cell_size, const Color& color);
     s32 draw_boundary(const Vec2& top_left, const Vec2& bottom_right, f32 thickness, const Color& color);
 
+    s32 draw_rect(const Vec2& pos, const Vec2& size, const Color& color);
+
     Vec2 get_screen_size() const { return screen_size_; }
     Scene* get_curr_scene() const { return curr_scene_; }
 
+    // 获取相机视野范围
+    std::pair<Vec2, Vec2> GetCameraAABB() const;
 private:
     Vec2 screen_size_ = Vec2{0};
     bool is_running_ = true;

@@ -13,7 +13,7 @@ public:
     
     virtual s32 init() { return 0; }
     virtual s32 handle_events(SDL_Event& event) { return 0; }
-    virtual s32 update(s64 now_ms) { return 0; }
+    virtual s32 update(s64 now_ms, s64 delta_ms) { return 0; }
     virtual s32 render() { return 0; }
     virtual s32 clean() { return 0; }
 

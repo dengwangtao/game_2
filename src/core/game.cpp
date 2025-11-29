@@ -76,7 +76,7 @@ s32 Game::run()
 
         // 更新
         s64 now_ms = SDL_GetTicks();
-        update(now_ms);
+        update(now_ms, now_ms - last_frame_ns_ / NS_PER_MS);
 
         // 渲染
         render();
@@ -121,11 +121,11 @@ s32 Game::handle_events()
     return 0;
 }
 
-s32 Game::update(s64 now_ms)
+s32 Game::update(s64 now_ms, s64 delta_ms)
 {
     if (curr_scene_)
     {
-        curr_scene_->update(now_ms);
+        curr_scene_->update(now_ms, delta_ms);
     }
     return 0;
 }
@@ -141,7 +141,7 @@ s32 Game::render()
     }
 
     // TODO: 测试代码, 后面需要删除
-    {
+    if (1){
         auto mouse_pos = Vec2(0, 0);
 
         auto state = SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
@@ -231,4 +231,26 @@ s32 Game::draw_boundary(const Vec2 &top_left, const Vec2 &bottom_right, f32 thic
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
 
     return 0;
+}
+
+s32 Game::draw_rect(const Vec2 &pos, const Vec2 &size, const Color &color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+    SDL_FRect rect = {pos.x, pos.y, size.x, size.y};
+    SDL_RenderFillRect(renderer_, &rect);
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    return s32();
+}
+
+std::pair<Vec2, Vec2> Game::GetCameraAABB() const
+{
+    if (! curr_scene_)
+    {
+        return std::make_pair(Vec2(0, 0), Vec2(0, 0));
+    }
+
+    return {
+        curr_scene_->get_camera_pos(),
+        curr_scene_->get_camera_pos() + screen_size_
+    };
 }

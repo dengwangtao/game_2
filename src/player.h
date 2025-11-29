@@ -1,12 +1,12 @@
 #pragma once
 
 
-#include "core/scene.h"
+#include "core/actor.h"
 
-class Player;
 
-class SceneMain : public Scene
+class Player : public Actor
 {
+
 public:
     s32 init() override;
     s32 handle_events(SDL_Event& event) override;
@@ -14,9 +14,7 @@ public:
     s32 render() override;
     s32 clean() override;
 
-private:
-    s32 render_background();
-
-    Vec2 world_size_ = Vec2{0};
-    Player* player_ = nullptr;
+    s32 keyboard_control();
+    s32 move(s64 delta_ms);
+    s32 sync_camera(); // 相机跟随
 };
