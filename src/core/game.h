@@ -27,6 +27,7 @@ public:
     s32 draw_boundary(const Vec2& top_left, const Vec2& bottom_right, f32 thickness, const Color& color);
 
     Vec2 get_screen_size() const { return screen_size_; }
+    Scene* get_curr_scene() const { return curr_scene_; }
 
 private:
     Vec2 screen_size_ = Vec2{0};

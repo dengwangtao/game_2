@@ -17,6 +17,9 @@ public:
     s32 render() override { return 0; }
     s32 clean() override { return 0; }
 
+    Vec2 world2screen(const Vec2& world_pos) const { return world_pos - camera_pos_; }
+    Vec2 screen2world(const Vec2& screen_pos) const { return screen_pos + camera_pos_; }
+
 protected:
     Vec2 camera_pos_ = Vec2{0};
     std::vector<Object*> objects_;
