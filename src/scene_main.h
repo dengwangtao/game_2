@@ -17,6 +17,6 @@ public:
 private:
     s32 render_background();
 
-    Vec2 world_size_ = Vec2{0};
+    
     Player* player_ = nullptr;
 };

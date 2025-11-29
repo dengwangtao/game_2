@@ -5,7 +5,7 @@
 
 s32 Player::init()
 {
-    max_speed_ = 200;
+    max_speed_ = 400;
     return s32();
 }
 
@@ -73,6 +73,14 @@ s32 Player::move(s64 delta_ms)
 {
     auto p = pos();
     p += velocity_ * (delta_ms / 1000.0f);
+
+    // 限制移动
+    auto* scene = game_.get_curr_scene();
+    if (scene)
+    {
+        p = glm::clamp(p, Vec2(0), scene->get_world_size() - 20.0f);
+    }
+
     set_world_pos(p);
     
     return s32();
@@ -83,7 +91,9 @@ s32 Player::sync_camera()
     auto* scene = game_.get_curr_scene();
     if (scene)
     {
-        scene->set_camera_pos(pos() - game_.get_screen_size() / 2.0f);
+        auto p = pos() - game_.get_screen_size() / 2.0f;
+        p = glm::clamp(p, Vec2(-30), Vec2(30) + scene->get_world_size() - game_.get_screen_size());
+        scene->set_camera_pos(p);
     }
 
     return s32();

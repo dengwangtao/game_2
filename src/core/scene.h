@@ -23,7 +23,10 @@ public:
     Vec2 get_camera_pos() const { return camera_pos_; }
     void set_camera_pos(const Vec2& pos) { camera_pos_ = pos; }
 
+    Vec2 get_world_size() const { return world_size_; }
+
 protected:
     Vec2 camera_pos_ = Vec2{0};
+    Vec2 world_size_ = Vec2{0};
     std::vector<Object*> objects_;
 };
