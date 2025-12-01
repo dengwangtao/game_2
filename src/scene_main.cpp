@@ -3,6 +3,8 @@
 
 s32 SceneMain::init()
 {
+    Scene::init();
+    
     world_size_ = game_.get_screen_size() * 3.0f;
 
     camera_pos_ = world_size_ / 2.0f - game_.get_screen_size() / 2.0f; // 相机位置也放在最中间
@@ -10,40 +12,37 @@ s32 SceneMain::init()
     player_ = new Player();
     player_->init();
     player_->set_pos(world_size_ / 2.0f);
+    add_child(player_);
     return 0;
 }
 
 s32 SceneMain::handle_events(SDL_Event& event)
 {
-    return s32();
+    Scene::handle_events(event);
+    return 0;
 }
 
 s32 SceneMain::update(s64 now_ms, s64 delta_ms)
 {
-    // TODO: 待删除
-    // camera_pos_ += Vec2{1, 1};
+    Scene::update(now_ms, delta_ms);
 
-    player_->update(now_ms, delta_ms);
-
-    return s32();
+    return 0;
 }
 
 s32 SceneMain::render()
 {
+    Scene::render();
+    
     render_background();
     
-    player_->render();
-
-    return s32();
+    return 0;
 }
 
 s32 SceneMain::clean()
 {
-    player_->clean();
-    delete player_;
-    player_ = nullptr;
+    Scene::clean();
 
-    return s32();
+    return 0;
 }
 
 s32 SceneMain::render_background()

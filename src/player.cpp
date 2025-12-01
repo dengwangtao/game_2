@@ -6,25 +6,33 @@
 
 s32 Player::init()
 {
+    Actor::init();
+
     max_speed_ = 400;
-    return s32();
+    return 0;
 }
 
 s32 Player::handle_events(SDL_Event &event)
 {
-    return s32();
+    Actor::handle_events(event);
+
+    return 0;
 }
 
 s32 Player::update(s64 now_ms, s64 delta_ms)
 {
+    Actor::update(now_ms, delta_ms);
+
     keyboard_control();
     move(delta_ms);
     sync_camera();
-    return s32();
+    return 0;
 }
 
 s32 Player::render()
 {
+    Actor::render();
+
     auto* ttt = G_RESOURCE_MGR.loadResource<SDL_Texture>("../assets/sprite/ghost-idle.png");
 
     auto aabb = game_.GetCameraAABB();
@@ -35,12 +43,14 @@ s32 Player::render()
 
     game_.draw_rect(get_render_pos() - 10.0f, {20, 20}, Color(255, 0, 0, 255));
 
-    return s32();
+    return 0;
 }
 
 s32 Player::clean()
 {
-    return s32();
+    Actor::clean();
+
+    return 0;
 }
 
 s32 Player::keyboard_control()
@@ -69,7 +79,7 @@ s32 Player::keyboard_control()
         velocity_.x = max_speed_;
     }
 
-    return s32();
+    return 0;
 }
 
 s32 Player::move(s64 delta_ms)
@@ -86,7 +96,7 @@ s32 Player::move(s64 delta_ms)
 
     set_world_pos(p);
     
-    return s32();
+    return 0;
 }
 
 s32 Player::sync_camera()
@@ -104,5 +114,5 @@ s32 Player::sync_camera()
         scene->set_camera_pos(p);
     }
 
-    return s32();
+    return 0;
 }

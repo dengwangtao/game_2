@@ -18,7 +18,7 @@ s32 ObjectWorld::update(s64 now_ms, s64 delta_ms)
 
     render_pos_ = scene->world2screen(world_pos_);
 
-    return s32();
+    return 0;
 }
 
 void ObjectWorld::set_world_pos(const Vec2 &pos)

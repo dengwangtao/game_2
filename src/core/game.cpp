@@ -239,7 +239,7 @@ s32 Game::draw_rect(const Vec2 &pos, const Vec2 &size, const Color &color)
     SDL_FRect rect = {pos.x, pos.y, size.x, size.y};
     SDL_RenderFillRect(renderer_, &rect);
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
-    return s32();
+    return 0;
 }
 
 std::pair<Vec2, Vec2> Game::GetCameraAABB() const
