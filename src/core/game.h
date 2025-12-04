@@ -33,7 +33,7 @@ public:
         const Vec2& position, const Vec2& size);
 
 
-
+    s64 now_ms() const { return now_ms_; }
 
     Vec2 get_screen_size() const { return screen_size_; }
     Scene* get_curr_scene() const { return curr_scene_; }
@@ -56,6 +56,7 @@ private:
     f64 dt_ = 0;
     u64 last_frame_ns_ = 0;
 
+    s64 now_ms_;
 
     Scene* curr_scene_ = nullptr;
 };

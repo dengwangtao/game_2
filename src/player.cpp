@@ -51,7 +51,7 @@ s32 Player::render()
 {
     Actor::render();
 
-#if 1
+#ifdef DWT_DEBUG
     auto aabb = game_.GetCameraAABB();
 
     LOG_TRACE("camera aabb=[{},{},{},{}], player pos=[{},{}]",
@@ -76,44 +76,57 @@ s32 Player::keyboard_control()
     velocity_ *= 0.9; // 速度衰减
 
     auto key_state = SDL_GetKeyboardState(nullptr);
-    if (key_state[SDL_SCANCODE_W] || key_state[SDL_SCANCODE_UP])
-    {
-        // move up
-        velocity_.y = -max_speed_;
-    }
-    if (key_state[SDL_SCANCODE_A] || key_state[SDL_SCANCODE_LEFT])
-    {
-        // move left
-        velocity_.x = -max_speed_;
-    }
-    if (key_state[SDL_SCANCODE_S] || key_state[SDL_SCANCODE_DOWN])
-    {
-        // move down
-        velocity_.y = max_speed_;
-    }
-    if (key_state[SDL_SCANCODE_D] || key_state[SDL_SCANCODE_RIGHT])
-    {
-        // move right
-        velocity_.x = max_speed_;
-    }
 
-    return 0;
-}
+    static const std::vector move_keys_vec = {
+        SDL_SCANCODE_W, SDL_SCANCODE_UP,
+        SDL_SCANCODE_A, SDL_SCANCODE_LEFT,
+        SDL_SCANCODE_S, SDL_SCANCODE_DOWN,
+        SDL_SCANCODE_D, SDL_SCANCODE_RIGHT
+    };
 
-s32 Player::move(s64 delta_ms)
-{
-    auto p = pos();
-    p += velocity_ * (delta_ms / 1000.0f);
-
-    // 限制移动
-    auto* scene = game_.get_curr_scene();
-    if (scene)
+    auto has_key = [&]()
     {
-        p = glm::clamp(p, Vec2(0), scene->get_world_size() - 20.0f);
-    }
+        for (auto& t : move_keys_vec)
+        {
+            if (key_state[t]) return true;
+        }
+        return false;
+    };
 
-    set_world_pos(p);
+    if (has_key())
+    {
+        velocity_ = Vec2{0};
+
+        if (key_state[SDL_SCANCODE_W] || key_state[SDL_SCANCODE_UP])
+        {
+            // move up
+            velocity_.y -= 1;
+        }
+        if (key_state[SDL_SCANCODE_A] || key_state[SDL_SCANCODE_LEFT])
+        {
+            // move left
+            velocity_.x -= 1;
+        }
+        if (key_state[SDL_SCANCODE_S] || key_state[SDL_SCANCODE_DOWN])
+        {
+            // move down
+            velocity_.y += 1;
+        }
+        if (key_state[SDL_SCANCODE_D] || key_state[SDL_SCANCODE_RIGHT])
+        {
+            // move right
+            velocity_.x += 1;
+        }
+
+        velocity_ = glm::normalize(velocity_) * max_speed_;
+
+        LOG_TRACE("v=[{}, {}]", velocity_.x, velocity_.y);
+    }
     
+
+
+    
+
     return 0;
 }
 

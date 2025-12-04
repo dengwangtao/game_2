@@ -1,6 +1,9 @@
 #include "scene_main.h"
 #include "player.h"
 
+#include "enemy.h"
+
+
 s32 SceneMain::init()
 {
     Scene::init();
@@ -13,6 +16,22 @@ s32 SceneMain::init()
     player_->init();
     player_->set_pos(world_size_ / 2.0f);
     add_child(player_);
+
+
+    for (s32 i = 0; i < 10; ++ i)
+    {
+        srand(G_GAME.now_ms());
+        auto enemy = new Enemy();
+        enemy->init();
+        auto offset = Vec2{
+            std::rand() % 400 + 100,
+            std::rand() % 400 + 100
+        };
+        enemy->set_pos(player_->pos() + offset);
+        enemy->set_target(player_);
+        add_child(enemy);
+    }
+
     return 0;
 }
 

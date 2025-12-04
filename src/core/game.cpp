@@ -77,6 +77,7 @@ s32 Game::run()
 
         // 更新
         s64 now_ms = SDL_GetTicks();
+        now_ms_ = now_ms;
         update(now_ms, now_ms - last_frame_ns_ / NS_PER_MS);
 
         // 渲染

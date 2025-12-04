@@ -17,7 +17,6 @@ public:
     s32 clean() override;
 
     s32 keyboard_control();
-    s32 move(s64 delta_ms);
     s32 sync_camera(); // 相机跟随
     s32 check_state();
     s32 change_state(bool moving);
