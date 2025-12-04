@@ -31,9 +31,9 @@ s32 SceneMain::update(s64 now_ms, s64 delta_ms)
 
 s32 SceneMain::render()
 {
-    Scene::render();
-    
     render_background();
+    
+    Scene::render();
     
     return 0;
 }
