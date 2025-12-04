@@ -12,6 +12,8 @@ public:
 
     void set_texture(const Texture& texture) override;
 
+    s32 copy_state(const SpriteAnim& other);
+
     s32 get_current_frame() const { return current_frame_; }
     void set_current_frame(s32 frame) { current_frame_ = frame; }
     s32 get_total_frames() const { return total_frames_; }

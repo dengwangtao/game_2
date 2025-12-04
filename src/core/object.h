@@ -23,9 +23,14 @@ public:
     virtual void add_child(Object* obj) { children_.insert(obj); }
     virtual void remove_child(Object* obj) { children_.erase(obj); }
 
+
+    void set_active(bool active) { is_active_ = active; }
+    bool is_active() const { return is_active_; }
+
 protected:
     Game& game_ = Game::Instance();
 
     std::unordered_set<Object*> children_; // children objects
 
+    bool is_active_ = true;
 };

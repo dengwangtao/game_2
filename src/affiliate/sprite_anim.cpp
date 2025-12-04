@@ -29,3 +29,15 @@ void SpriteAnim::set_texture(const Texture& texture)
 
     size_ = Vec2{texture_.rect.w, texture_.rect.h};
 }
+
+s32 SpriteAnim::copy_state(const SpriteAnim& other)
+{
+    current_frame_ = other.current_frame_;
+    if (current_frame_ >= total_frames_)
+    {
+        current_frame_ = 0;
+    }
+    frame_timer_ = other.frame_timer_;
+
+    return 0;
+}
