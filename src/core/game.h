@@ -9,6 +9,8 @@
 struct SDL_Window;
 struct SDL_Renderer;
 
+struct Texture;
+
 class Scene;
 
 class Game : public Singleton<Game>
@@ -25,8 +27,13 @@ public:
     // 背景网格
     s32 draw_grid(const Vec2& top_left, const Vec2& bottom_right, const Vec2& cell_size, const Color& color);
     s32 draw_boundary(const Vec2& top_left, const Vec2& bottom_right, f32 thickness, const Color& color);
-
     s32 draw_rect(const Vec2& pos, const Vec2& size, const Color& color);
+
+    s32 render_texture(const Texture& texture,
+        const Vec2& position, const Vec2& size);
+
+
+
 
     Vec2 get_screen_size() const { return screen_size_; }
     Scene* get_curr_scene() const { return curr_scene_; }

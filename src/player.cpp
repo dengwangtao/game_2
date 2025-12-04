@@ -3,12 +3,21 @@
 #include "core/scene.h"
 #include <SDL3/SDL.h>
 #include "resource_mgr.h"
+#include "affiliate/sprite.h"
 
 s32 Player::init()
 {
     Actor::init();
 
     max_speed_ = 400;
+
+    auto sprite = new Sprite();
+    sprite->set_texture(
+        Texture("../assets/sprite/ghost-idle.png")
+    );
+    sprite->set_parent(this);
+    add_child(sprite);
+
     return 0;
 }
 
@@ -41,7 +50,7 @@ s32 Player::render()
              aabb.first.x, aabb.first.y, aabb.second.x, aabb.second.y,
              pos().x, pos().y);
 
-    game_.draw_rect(get_render_pos() - 10.0f, {20, 20}, Color(255, 0, 0, 255));
+    game_.draw_rect(get_render_pos(), {20, 20}, Color(255, 0, 0, 255));
 
     return 0;
 }

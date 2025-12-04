@@ -6,6 +6,7 @@
 #include "comm/log_def.h"
 #include "scene_main.h"
 #include "game.h"
+#include "affiliate/sprite.h"
 
 
 s32 Game::init(const String &title, int width, int height)
@@ -239,6 +240,28 @@ s32 Game::draw_rect(const Vec2 &pos, const Vec2 &size, const Color &color)
     SDL_FRect rect = {pos.x, pos.y, size.x, size.y};
     SDL_RenderFillRect(renderer_, &rect);
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    return 0;
+}
+
+s32 Game::render_texture(const Texture& texture, const Vec2& position, const Vec2& size)
+{
+    SDL_FRect dst_rect = {
+        position.x,
+        position.y,
+        texture.rect.w,
+        texture.rect.h
+    };
+
+    SDL_RenderTextureRotated(
+        renderer_,
+        texture.texture,
+        &texture.rect,
+        &dst_rect,
+        texture.angle,
+        nullptr,
+        texture.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE
+    );
+    
     return 0;
 }
 
