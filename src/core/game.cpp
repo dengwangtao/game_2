@@ -248,8 +248,8 @@ s32 Game::render_texture(const Texture& texture, const Vec2& position, const Vec
     SDL_FRect dst_rect = {
         position.x,
         position.y,
-        texture.rect.w,
-        texture.rect.h
+        size.x,
+        size.y
     };
 
     SDL_RenderTextureRotated(

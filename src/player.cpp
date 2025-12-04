@@ -3,7 +3,7 @@
 #include "core/scene.h"
 #include <SDL3/SDL.h>
 #include "resource_mgr.h"
-#include "affiliate/sprite.h"
+#include "affiliate/sprite_anim.h"
 
 s32 Player::init()
 {
@@ -11,12 +11,13 @@ s32 Player::init()
 
     max_speed_ = 400;
 
-    auto sprite = new Sprite();
-    sprite->set_texture(
-        Texture("../assets/sprite/ghost-idle.png")
+    auto sprite = Sprite::add_sprite<SpriteAnim>(
+        this,
+        "../assets/sprite/ghost-idle.png",
+        2.0f
     );
-    sprite->set_parent(this);
-    add_child(sprite);
+
+    (void)sprite; // 避免未使用警告
 
     return 0;
 }
@@ -42,15 +43,15 @@ s32 Player::render()
 {
     Actor::render();
 
-    auto* ttt = G_RESOURCE_MGR.loadResource<SDL_Texture>("../assets/sprite/ghost-idle.png");
-
+#if 1
     auto aabb = game_.GetCameraAABB();
 
     LOG_TRACE("camera aabb=[{},{},{},{}], player pos=[{},{}]",
              aabb.first.x, aabb.first.y, aabb.second.x, aabb.second.y,
              pos().x, pos().y);
 
-    game_.draw_rect(get_render_pos(), {20, 20}, Color(255, 0, 0, 255));
+    game_.draw_rect(get_render_pos(), {5, 5}, Color(255, 0, 0, 255));
+#endif
 
     return 0;
 }

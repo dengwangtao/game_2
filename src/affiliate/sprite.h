@@ -16,17 +16,48 @@ struct Texture
 };
 
 
+
 class Sprite : public ObjectAffiliate
 {
 
 public:
     s32 render() override;
 
+    void scale(f32 factor)
+    {
+        size_ *= factor;
+    }
 
     Texture& get_texture() { return texture_; }
-    void set_texture(const Texture& texture);
+    virtual void set_texture(const Texture& texture);
+
+
+    template<std::derived_from<Sprite> T>
+    static T* add_sprite(
+        ObjectScreen* parent,
+        const String& file_path,
+        f32 scale_factor = 1.0f,
+        T* = nullptr
+    );
 
 protected:
     Texture texture_;
 
 };
+
+template <std::derived_from<Sprite> T>
+inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
+                              f32 scale_factor, T*)
+{
+    auto sprite = new T();
+    sprite->init();
+    sprite->set_texture(
+        Texture(file_path)
+    );
+    sprite->scale(scale_factor);
+    sprite->set_parent(parent);
+
+    parent->add_child(sprite);
+
+    return sprite;
+}
