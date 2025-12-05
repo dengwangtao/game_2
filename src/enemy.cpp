@@ -40,8 +40,9 @@ s32 Enemy::init()
     auto collider = Collider::add_collider(
         this,
         Collider::Type::CIRCLE,
-        Vec2{sprite_current_->get_size().x * 0.8f} // 直径
+        Vec2{sprite_current_->get_size().x * 0.9f} // 直径
     );
+    collider->set_offset(Vec2{0});
 
     return 0;
 }
@@ -89,7 +90,7 @@ s32 Enemy::attack()
     {
         if (collider_->is_colliding(*target_->get_collider()))
         {
-            LOG_INFO("Enemy attack hit the target!");
+            LOG_TRACE("Enemy attack hit the target!");
         }
     }
 

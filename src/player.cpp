@@ -30,8 +30,9 @@ s32 Player::init()
     auto collider = Collider::add_collider(
         this,
         Collider::Type::CIRCLE,
-        Vec2{sprite_idle_->get_size().x * 0.8f} // 直径
+        Vec2{sprite_idle_->get_size().x * 0.6f} // 直径
     );
+    collider->set_offset(Vec2{sprite_idle_->get_size().x / 5});
 
 
     return 0;

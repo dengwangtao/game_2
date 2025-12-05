@@ -28,7 +28,7 @@ public:
 
 
 
-    static s32 add_collider(
+    static Collider* add_collider(
         ObjectWorld* parent,
         Type type,
         const Vec2& size,

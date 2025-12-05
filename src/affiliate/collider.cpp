@@ -141,7 +141,7 @@ std::tuple<Vec2, Vec2, bool> Collider::get_aabb(bool render) const
     return {{}, {}, false};
 }
 
-s32 Collider::add_collider(ObjectWorld* parent, Type type, const Vec2& size,
+Collider* Collider::add_collider(ObjectWorld* parent, Type type, const Vec2& size,
                            const Vec2& offset)
 {
     auto collider = new Collider();
@@ -154,6 +154,6 @@ s32 Collider::add_collider(ObjectWorld* parent, Type type, const Vec2& size,
     parent->set_collider(collider);
     parent->add_child(collider);
 
-    return 0;
+    return collider;
 
 }
