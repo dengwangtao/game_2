@@ -26,7 +26,7 @@ public:
 
     s32 destroy();
 
-
+    s32 attack();
     s32 aim_target(const Actor& actor);
 
     s32 check_state();

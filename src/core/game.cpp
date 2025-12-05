@@ -244,6 +244,68 @@ s32 Game::draw_rect(const Vec2 &pos, const Vec2 &size, const Color &color)
     return 0;
 }
 
+s32 Game::draw_circle(const Vec2& center, f32 radius, const Color& color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+
+    const float cx = center.x;
+    const float cy = center.y;
+
+    for (int y = (int)(cy - radius); y <= (int)(cy + radius); ++y)
+    {
+        float dy = y - cy;
+        float dx = sqrtf(radius * radius - dy * dy);
+
+        int x1 = (int)(cx - dx);
+        int x2 = (int)(cx + dx);
+
+        SDL_RenderLine(renderer_, x1, y, x2, y);
+    }
+
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    return 0;
+}
+
+s32 Game::draw_circle_outline(const Vec2& center, f32 radius,
+                              const Color& color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+
+    int cx = (int)center.x;
+    int cy = (int)center.y;
+    int r = (int)radius;
+
+    int x = r;
+    int y = 0;
+    int err = 0;
+
+    while (x >= y)
+    {
+        SDL_RenderPoint(renderer_, cx + x, cy + y);
+        SDL_RenderPoint(renderer_, cx + y, cy + x);
+        SDL_RenderPoint(renderer_, cx - y, cy + x);
+        SDL_RenderPoint(renderer_, cx - x, cy + y);
+        SDL_RenderPoint(renderer_, cx - x, cy - y);
+        SDL_RenderPoint(renderer_, cx - y, cy - x);
+        SDL_RenderPoint(renderer_, cx + y, cy - x);
+        SDL_RenderPoint(renderer_, cx + x, cy - y);
+
+        y += 1;
+        if (err <= 0)
+        {
+            err += 2*y + 1;
+        }
+        else
+        {
+            x -= 1;
+            err -= 2*x + 1;
+        }
+    }
+
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    return 0;
+}
+
 s32 Game::render_texture(const Texture& texture, const Vec2& position, const Vec2& size)
 {
     SDL_FRect dst_rect = {

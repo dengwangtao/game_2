@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 #include "resource_mgr.h"
 #include "affiliate/sprite_anim.h"
+#include "affiliate/collider.h"
 
 s32 Player::init()
 {
@@ -23,6 +24,15 @@ s32 Player::init()
         2.0f
     );
     sprite_move_->set_active(false);
+
+
+    // 添加碰撞器
+    auto collider = Collider::add_collider(
+        this,
+        Collider::Type::CIRCLE,
+        Vec2{sprite_idle_->get_size().x * 0.8f} // 直径
+    );
+
 
     return 0;
 }
@@ -100,22 +110,22 @@ s32 Player::keyboard_control()
         if (key_state[SDL_SCANCODE_W] || key_state[SDL_SCANCODE_UP])
         {
             // move up
-            velocity_.y -= 1;
+            velocity_.y = -1;
         }
         if (key_state[SDL_SCANCODE_A] || key_state[SDL_SCANCODE_LEFT])
         {
             // move left
-            velocity_.x -= 1;
+            velocity_.x = -1;
         }
         if (key_state[SDL_SCANCODE_S] || key_state[SDL_SCANCODE_DOWN])
         {
             // move down
-            velocity_.y += 1;
+            velocity_.y = 1;
         }
         if (key_state[SDL_SCANCODE_D] || key_state[SDL_SCANCODE_RIGHT])
         {
             // move right
-            velocity_.x += 1;
+            velocity_.x = 1;
         }
 
         velocity_ = glm::normalize(velocity_) * max_speed_;

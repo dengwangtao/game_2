@@ -5,6 +5,7 @@
 #include "core/scene.h"
 
 #include "affiliate/sprite_anim.h"
+#include "affiliate/collider.h"
 
 s32 Enemy::init()
 {
@@ -35,6 +36,13 @@ s32 Enemy::init()
     sprite_current_ = sprite_normal_;
 
 
+    // 添加碰撞器
+    auto collider = Collider::add_collider(
+        this,
+        Collider::Type::CIRCLE,
+        Vec2{sprite_current_->get_size().x * 0.8f} // 直径
+    );
+
     return 0;
 }
 
@@ -48,6 +56,8 @@ s32 Enemy::update(s64 now_ms, s64 delta_ms)
   }
 
   move(delta_ms);
+
+  attack();
 
   return 0;
 }
@@ -73,8 +83,20 @@ s32 Enemy::destroy()
     return 0;
 }
 
-s32 Enemy::aim_target(const Actor& actor)
+s32 Enemy::attack()
 {
+    if (collider_ && target_->get_collider())
+    {
+        if (collider_->is_colliding(*target_->get_collider()))
+        {
+            LOG_INFO("Enemy attack hit the target!");
+        }
+    }
+
+    return 0;
+}
+
+s32 Enemy::aim_target(const Actor& actor) {
   auto dir = actor.get_world_pos() - get_world_pos();
   dir = glm::normalize(dir);
 
@@ -85,7 +107,7 @@ s32 Enemy::aim_target(const Actor& actor)
 
 s32 Enemy::check_state()
 {
-
+    // TODO:
 
     return 0;
 }
