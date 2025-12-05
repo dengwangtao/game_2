@@ -9,7 +9,12 @@ class SpriteAnim;
 
 class Enemy : public Actor
 {
-
+    enum class State
+    {
+        NORMAL,
+        HURT,
+        DIE
+    };
 
 public:
 
@@ -19,8 +24,16 @@ public:
     s32 render() override;
     // s32 clean() override;
 
+    s32 destroy();
+
 
     s32 aim_target(const Actor& actor);
+
+    s32 check_state();
+    s32 change_state(State state);
+
+
+
 
     void set_target(Actor* target) { target_ = target; }
     Actor* get_target() const { return target_; }
@@ -28,5 +41,9 @@ public:
 protected:
     Actor* target_ = nullptr;
 
-    SpriteAnim* sprite_ = nullptr;
+    State state_ = State::NORMAL;
+    SpriteAnim* sprite_normal_ = nullptr;
+    SpriteAnim* sprite_hurt_ = nullptr;
+    SpriteAnim* sprite_die_ = nullptr;
+    SpriteAnim* sprite_current_ = nullptr;
 };

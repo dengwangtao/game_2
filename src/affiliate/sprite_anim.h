@@ -22,12 +22,15 @@ public:
     void set_fps(int fps) { fps_ = fps; }
     f32 get_frame_timer() const { return frame_timer_; }
     void set_frame_timer(f32 timer) { frame_timer_ = timer; }
+    bool is_loop() const { return is_loop_; }
+    void set_loop(bool loop) { is_loop_ = loop; }
 
 protected:
     s32 current_frame_ = 0;
     s32 total_frames_ = 0;
     int fps_ = 10;
     s64 frame_timer_ = 0;
+    bool is_loop_ = true;
 
 
 };

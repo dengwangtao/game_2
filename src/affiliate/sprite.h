@@ -31,23 +31,29 @@ public:
     Texture& get_texture() { return texture_; }
     virtual void set_texture(const Texture& texture);
 
+    bool is_finished() const { return is_finished_; }
+    void set_finished(bool finished) { is_finished_ = finished; }
+
 
     template<std::derived_from<Sprite> T>
     static T* add_sprite(
         ObjectScreen* parent,
         const String& file_path,
         f32 scale_factor = 1.0f,
+        bool is_active = true,
         T* = nullptr
     );
 
 protected:
     Texture texture_;
+    bool is_finished_ = false;
 
 };
 
 template <std::derived_from<Sprite> T>
 inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
-                              f32 scale_factor, T*)
+                              f32 scale_factor, bool is_active,
+                              T*)
 {
     auto sprite = new T();
     sprite->init();
@@ -56,6 +62,7 @@ inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
     );
     sprite->scale(scale_factor);
     sprite->set_parent(parent);
+    sprite->set_active(is_active);
 
     parent->add_child(sprite);
 

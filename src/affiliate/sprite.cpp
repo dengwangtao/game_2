@@ -17,7 +17,7 @@ Texture::Texture(const String& file_path)
 
 s32 Sprite::render()
 {
-    if (texture_.texture == nullptr)
+    if (! texture_.texture)
     {
         LOG_ERROR("Sprite render failed: texture is null");
         return -1;
@@ -27,6 +27,11 @@ s32 Sprite::render()
     {
         LOG_ERROR("Sprite render failed: parent is null");
         return -2;
+    }
+
+    if (is_finished_)
+    {
+        return 0;
     }
 
     

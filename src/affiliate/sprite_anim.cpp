@@ -2,12 +2,23 @@
 
 s32 SpriteAnim::update(s64 now_ms, s64 delta_ms)
 {
+    if (is_finished_)
+    {
+        return 0;
+    }
+
     frame_timer_ += delta_ms;
 
     if (frame_timer_ >= (1000.0f / fps_))
     {
-        current_frame_ = (current_frame_ + 1) % total_frames_;
         frame_timer_ = 0;
+        
+        if (!is_loop_ && current_frame_ == total_frames_ - 1)
+        {
+            is_finished_ = true;
+        }
+
+        current_frame_ = (current_frame_ + 1) % total_frames_;
 
         // 更新纹理的rect以显示当前帧
         if (texture_.texture)

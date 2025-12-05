@@ -18,7 +18,7 @@ s32 SceneMain::init()
     add_child(player_);
 
 
-    for (s32 i = 0; i < 10; ++ i)
+    for (s32 i = 0; i < 1; ++ i)
     {
         srand(G_GAME.now_ms());
         auto enemy = new Enemy();

@@ -26,6 +26,8 @@ public:
 
     void set_active(bool active) { is_active_ = active; }
     bool is_active() const { return is_active_; }
+    void mark_for_delete() { mark_delete_ = true; }
+    bool is_marked_for_delete() const { return mark_delete_; }
 
 protected:
     Game& game_ = Game::Instance();
@@ -33,4 +35,5 @@ protected:
     std::unordered_set<Object*> children_; // children objects
 
     bool is_active_ = true;
+    bool mark_delete_ = false;
 };
