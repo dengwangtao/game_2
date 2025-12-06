@@ -32,7 +32,7 @@ public:
         ObjectWorld* parent,
         Type type,
         const Vec2& size,
-        const Vec2& offset = Vec2{0}
+        Anchor anchor = Anchor::TOP_LEFT
     );
 
 protected:

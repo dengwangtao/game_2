@@ -15,12 +15,14 @@ s32 Player::init()
     sprite_idle_ = Sprite::add_sprite<SpriteAnim>(
         this,
         "../assets/sprite/ghost-idle.png",
+        Anchor::CENTER,
         2.0f
     );
 
     sprite_move_ = Sprite::add_sprite<SpriteAnim>(
         this,
         "../assets/sprite/ghost-move.png",
+        Anchor::CENTER,
         2.0f
     );
     sprite_move_->set_active(false);
@@ -30,9 +32,9 @@ s32 Player::init()
     auto collider = Collider::add_collider(
         this,
         Collider::Type::CIRCLE,
-        Vec2{sprite_idle_->get_size().x * 0.6f} // 直径
+        Vec2{sprite_idle_->get_size().x * 0.6f}, // 直径
+        Anchor::CENTER
     );
-    collider->set_offset(Vec2{sprite_idle_->get_size().x / 5});
 
 
     return 0;

@@ -39,6 +39,7 @@ public:
     static T* add_sprite(
         ObjectScreen* parent,
         const String& file_path,
+        Anchor anchor = Anchor::TOP_LEFT,
         f32 scale_factor = 1.0f,
         bool is_active = true,
         T* = nullptr
@@ -52,6 +53,7 @@ protected:
 
 template <std::derived_from<Sprite> T>
 inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
+                              Anchor anchor, 
                               f32 scale_factor, bool is_active,
                               T*)
 {
@@ -63,6 +65,7 @@ inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
     sprite->scale(scale_factor);
     sprite->set_parent(parent);
     sprite->set_active(is_active);
+    sprite->set_offset_by_anchor(anchor);
 
     parent->add_child(sprite);
 

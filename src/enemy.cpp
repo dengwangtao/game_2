@@ -14,12 +14,14 @@ s32 Enemy::init()
     sprite_normal_ = Sprite::add_sprite<SpriteAnim>(
         this,
         "../assets/sprite/ghost-Sheet.png",
+        Anchor::CENTER,
         2.0f
     );
 
     sprite_hurt_ = Sprite::add_sprite<SpriteAnim>(
         this,
         "../assets/sprite/ghostHurt-Sheet.png",
+        Anchor::CENTER,
         2.0f,
         false
     );
@@ -28,6 +30,7 @@ s32 Enemy::init()
     sprite_die_ = Sprite::add_sprite<SpriteAnim>(
         this,
         "../assets/sprite/ghostDead-Sheet.png",
+        Anchor::CENTER,
         2.0f,
         false
     );
@@ -40,9 +43,9 @@ s32 Enemy::init()
     auto collider = Collider::add_collider(
         this,
         Collider::Type::CIRCLE,
-        Vec2{sprite_current_->get_size().x * 0.9f} // 直径
+        Vec2{sprite_current_->get_size().x * 0.9f}, // 直径
+        Anchor::CENTER
     );
-    collider->set_offset(Vec2{0});
 
     return 0;
 }

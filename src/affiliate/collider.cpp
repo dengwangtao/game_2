@@ -142,14 +142,14 @@ std::tuple<Vec2, Vec2, bool> Collider::get_aabb(bool render) const
 }
 
 Collider* Collider::add_collider(ObjectWorld* parent, Type type, const Vec2& size,
-                           const Vec2& offset)
+                           Anchor anchor)
 {
     auto collider = new Collider();
     collider->init();
     collider->set_parent(parent);
     collider->set_type(type);
     collider->set_size(size);
-    collider->set_offset(offset);
+    collider->set_offset_by_anchor(anchor);
 
     parent->set_collider(collider);
     parent->add_child(collider);

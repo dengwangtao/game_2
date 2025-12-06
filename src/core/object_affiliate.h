@@ -21,8 +21,11 @@ public:
     void set_size(const Vec2& size) { size_ = size; }
     const Vec2& get_size() const { return size_; }
 
+    void set_offset_by_anchor(Anchor anchor);
+
 protected:
     ObjectScreen* parent_ = nullptr;
     Vec2 offset_ = Vec2{0};
     Vec2 size_ = Vec2{0};
+    Anchor anchor_ = Anchor::TOP_LEFT; // 锚点
 };
