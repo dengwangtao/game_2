@@ -306,6 +306,16 @@ s32 Game::draw_circle_outline(const Vec2& center, f32 radius,
     return 0;
 }
 
+s32 Game::draw_debug_text(const Vec2& position, const String& text, const Color& color)
+{
+    SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
+
+    SDL_RenderDebugText(renderer_, position.x, position.y, text.c_str());
+
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    return 0;
+}
+
 s32 Game::render_texture(const Texture& texture, const Vec2& position, const Vec2& size)
 {
     SDL_FRect dst_rect = {

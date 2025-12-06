@@ -23,6 +23,8 @@ public:
     s32 update(s64 now_ms, s64 delta_ms) override;
     s32 render() override;
     // s32 clean() override;
+    std::string to_string() const override
+    { return "Enemy:" + std::format("{:x}", (uintptr_t)this); }
 
     s32 destroy();
 

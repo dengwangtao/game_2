@@ -50,7 +50,7 @@ s32 Object::render()
 
 s32 Object::clean()
 {
-    LOG_DEBUG("Cleaning Object and its children: {}", (void*)this);
+    LOG_DEBUG("Cleaning Object and its children: {}", to_string());
 
     FOR_CHILDREN_BEGIN
         child->clean();

@@ -5,6 +5,7 @@
 #include "resource_mgr.h"
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
+#include "raw/stats.h"
 
 s32 Player::init()
 {
@@ -36,6 +37,16 @@ s32 Player::init()
         Anchor::CENTER
     );
 
+
+    auto* stats = Stats::add_stats(
+        this,
+        100.0f,
+        100.0f,
+        50.0f,
+        50.0f,
+        10.0f,
+        5.0f
+    );
 
     return 0;
 }

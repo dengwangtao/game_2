@@ -30,6 +30,7 @@ public:
     s32 draw_rect(const Vec2& pos, const Vec2& size, const Color& color);
     s32 draw_circle(const Vec2& center, f32 radius, const Color& color);
     s32 draw_circle_outline(const Vec2& center, f32 radius, const Color& color);
+    s32 draw_debug_text(const Vec2& position, const String& text, const Color& color= Color{255, 255, 255, 255});
 
     s32 render_texture(const Texture& texture,
         const Vec2& position, const Vec2& size);

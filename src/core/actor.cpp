@@ -1,6 +1,8 @@
 #include "actor.h"
 #include "comm/comm_def.h"
 #include "scene_main.h"
+#include "raw/stats.h"
+#include "comm/log_def.h"
 
 s32 Actor::move(s64 delta_ms)
 {
@@ -16,5 +18,16 @@ s32 Actor::move(s64 delta_ms)
 
     set_world_pos(p);
     
+    return 0;
+}
+
+s32 Actor::take_damage(f32 damage, Actor* attacker)
+{
+    if (stats_)
+    {
+        stats_->take_damage(damage);
+        LOG_DEBUG("Actor {} took {} damage from Actor {}", to_string(), damage, attacker ? attacker->to_string() : "null");
+    }
+
     return 0;
 }

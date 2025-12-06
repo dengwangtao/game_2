@@ -6,6 +6,7 @@
 
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
+#include "raw/stats.h"
 
 s32 Enemy::init()
 {
@@ -45,6 +46,16 @@ s32 Enemy::init()
         Collider::Type::CIRCLE,
         Vec2{sprite_current_->get_size().x * 0.9f}, // 直径
         Anchor::CENTER
+    );
+
+    auto* stats = Stats::add_stats(
+        this,
+        100.0f,
+        100.0f,
+        50.0f,
+        50.0f,
+        10.0f,
+        5.0f
     );
 
     return 0;
@@ -94,6 +105,12 @@ s32 Enemy::attack()
         if (collider_->is_colliding(*target_->get_collider()))
         {
             LOG_TRACE("Enemy attack hit the target!");
+            
+            if (stats_ && target_->get_stats())
+            {
+                target_->take_damage(stats_->get_attack(), this);
+            }
+
         }
     }
 
