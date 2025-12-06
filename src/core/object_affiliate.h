@@ -18,10 +18,14 @@ public:
     ObjectScreen* get_parent() const { return parent_; }
     void set_offset(const Vec2& offset) { offset_ = offset; }
     const Vec2& get_offset() const { return offset_; }
-    void set_size(const Vec2& size) { size_ = size; }
+    void set_size(const Vec2& size);
     const Vec2& get_size() const { return size_; }
 
     void set_offset_by_anchor(Anchor anchor);
+    void scale(f32 factor)
+    {
+        set_size(size_ * factor);
+    }
 
 protected:
     ObjectScreen* parent_ = nullptr;

@@ -23,11 +23,6 @@ class Sprite : public ObjectAffiliate
 public:
     s32 render() override;
 
-    void scale(f32 factor)
-    {
-        size_ *= factor;
-    }
-
     Texture& get_texture() { return texture_; }
     virtual void set_texture(const Texture& texture);
 

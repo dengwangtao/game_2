@@ -7,6 +7,7 @@
 #include "scene_main.h"
 #include "game.h"
 #include "affiliate/sprite.h"
+#include "resource_mgr.h"
 
 
 s32 Game::init(const String &title, int width, int height)
@@ -143,18 +144,17 @@ s32 Game::render()
     }
 
     // TODO: 测试代码, 后面需要删除
-    if (1){
+    if (1)
+    {
         auto mouse_pos = Vec2(0, 0);
 
         auto state = SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
-        {
-            auto getbit = [](int c, int i) ->u8 { return (c & (1 << i)) ? 255 : 128; };
-
-            SDL_Color color = {getbit(state, 0), getbit(state, 1), getbit(state, 2), 255}; // 默认灰色
-            SDL_FRect rect = {mouse_pos.x - 20, mouse_pos.y - 20, 40, 40};
-            SDL_SetRenderDrawColor(renderer_, color.r, color.g, color.b, color.a);
-            SDL_RenderFillRect(renderer_, &rect);
-        }
+        Texture cursor_tex("../assets/UI/pointer_c_shaded.png");
+        G_GAME.render_texture(
+            cursor_tex,
+            mouse_pos,
+            Vec2{cursor_tex.rect.w, cursor_tex.rect.h} * 2.0f
+        );
     }
 
     SDL_RenderPresent(renderer_);
