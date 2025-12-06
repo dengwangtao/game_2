@@ -8,6 +8,8 @@ s32 Stats::update(s64 now_ms, s64 delta_ms)
 
     regen_mana(delta_ms);
 
+    update_invincibility(delta_ms);
+
     return 0;
 }
 
@@ -32,9 +34,19 @@ s32 Stats::render()
             "  Mana: " + std::to_string((s32)mana_) + "/" + std::to_string((s32)max_mana_) +
             "  Attack: " + std::to_string((s32)attack_) +
             "  Mana Regen: " + std::to_string((s32)mana_regen_) + "/s";
+        
+            G_GAME.draw_debug_text(
+            render_pos + Vec2{-20.0f, 30.0f},
+            stats_text
+        );
+
+        stats_text = std::string() + 
+            " Invincible: " + (is_invincible_ ? "Yes" : "No") +
+            " Invincible Timer: " + std::to_string(invincible_timer_) + "ms"
+            ;
 
         G_GAME.draw_debug_text(
-            render_pos + Vec2{-20.0f, 30.0f},
+            render_pos + Vec2{-20.0f, 46.0f},
             stats_text
         );
             
@@ -90,11 +102,32 @@ s32 Stats::regen_mana(s64 delta_ms)
 
 s32 Stats::take_damage(f32 damage)
 {
+    if (is_invincible_)
+    {
+        return 1;
+    }
+
+
     hp_ -= damage;
     if (hp_ < 0)
     {
         hp_ = 0;
         is_alive_ = false;
+    }
+
+    set_is_invincible(true);
+    invincible_timer_ = 1000; // 1000ms无敌时间
+
+    return 0;
+}
+
+s32 Stats::update_invincibility(s64 delta_ms)
+{
+    invincible_timer_ -= delta_ms;
+    if (invincible_timer_ <= 0)
+    {
+        invincible_timer_ = 0;
+        set_is_invincible(false);
     }
 
     return 0;

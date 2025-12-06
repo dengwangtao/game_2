@@ -68,6 +68,10 @@ s32 Player::update(s64 now_ms, s64 delta_ms)
 
     move(delta_ms);
     sync_camera();
+
+    // TODO: 死亡判断
+    is_alive();
+
     return 0;
 }
 
