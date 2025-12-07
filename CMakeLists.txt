@@ -13,6 +13,7 @@ set(CMAKE_BUILD_TYPE Debug)
 if (MSVC)
     add_compile_options(/W4)
     add_compile_options(/utf-8)
+     add_compile_options(/MP) # 多线程编译
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
     add_compile_options(-Wno-unused-but-set-variable)

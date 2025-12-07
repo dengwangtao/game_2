@@ -21,6 +21,8 @@ public:
     s32 update(s64 now_ms, s64 delta_ms) override;
     s32 render() override;
     s32 clean() override;
+    std::string to_string() const override
+    { return "Scene:" + std::format("{:x}", (uintptr_t)this); }
 
     Vec2 world2screen(const Vec2& world_pos) const { return world_pos - camera_pos_; }
     Vec2 screen2world(const Vec2& screen_pos) const { return screen_pos + camera_pos_; }

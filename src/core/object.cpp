@@ -1,50 +1,65 @@
 
 #include "object.h"
 #include "comm/log_def.h"
+#include "world/effect.h"
+#include <functional>
 
-#define FOR_CHILDREN_BEGIN \
-    for (auto it = children_.begin(); it != children_.end();) \
-    { \
-        auto* child = *it; \
-        if (child->is_marked_for_delete()) \
-        { \
-            it = children_.erase(it); \
-            child->clean(); \
-            delete child; \
-            continue; \
-        } \
-        if (!child->is_active()) { \
-            ++ it; \
-            continue; \
-        } \
-
-#define FOR_CHILDREN_END \
-        ++ it; \
+template<class F>
+void for_children(std::unordered_set<Object*>& children,
+                  std::vector<Object*>& to_add,
+                  F&& fn)
+{
+    for (auto* ptr : to_add)
+    {
+        children.insert(ptr);
     }
+    to_add.clear();
 
+    for (auto it = children.begin(); it != children.end(); )
+    {
+        auto* c = *it;
+        if (c->is_marked_for_delete())
+        {
+            it = children.erase(it);
+            c->clean();
+            delete c;
+        }
+        else
+        {
+            fn(c);
+            ++it;
+        }
+    }
+}
 
 s32 Object::handle_events(SDL_Event& event)
 {
-    FOR_CHILDREN_BEGIN
+    for_children(children_, children_to_add_, [&](Object* child)
+    {
+        if (! child->is_active()) return;
         child->handle_events(event);
-    FOR_CHILDREN_END
+    });
 
     return 0;
 }
 
 s32 Object::update(s64 now_ms, s64 delta_ms)
 {
-    FOR_CHILDREN_BEGIN
+    for_children(children_, children_to_add_, [&](Object* child)
+    {
+        if (! child->is_active()) return;
         child->update(now_ms, delta_ms);
-    FOR_CHILDREN_END
+    });
     return 0;
 }
 
 s32 Object::render()
 {
-    FOR_CHILDREN_BEGIN
+    for_children(children_, children_to_add_, [&](Object* child)
+    {
+        if (! child->is_active()) return;
         child->render();
-    FOR_CHILDREN_END
+    });
     return 0;
 }
 
@@ -52,11 +67,27 @@ s32 Object::clean()
 {
     LOG_DEBUG("Cleaning Object and its children: {}", to_string());
 
-    FOR_CHILDREN_BEGIN
+    for_children(children_, children_to_add_, [&](Object* child)
+    {
         child->clean();
         delete child;
-    FOR_CHILDREN_END
+    });
     children_.clear();
 
     return 0;
+}
+
+void Object::log_obj_tree() const noexcept
+{
+    std::function<void(const Object*, s32)> dfs = [&](const Object* obj, s32 depth)
+    {
+        if (! obj) return;
+        LOG_DEBUG("{} {}", std::string(depth, '\t'), obj->to_string());
+        for (auto* child : obj->children_)
+        {
+            dfs(child, depth + 1);
+        }
+    };
+
+    dfs(this, 0);
 }

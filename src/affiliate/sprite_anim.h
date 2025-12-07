@@ -9,6 +9,8 @@ class SpriteAnim: public Sprite
 
 public:
     s32 update(s64 now_ms, s64 delta_ms) override;
+    std::string to_string() const override
+    { return "SpriteAnim:" + std::format("{:x}", (uintptr_t)this); }
 
     void set_texture(const Texture& texture) override;
 

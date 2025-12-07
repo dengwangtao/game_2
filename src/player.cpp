@@ -6,6 +6,7 @@
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
 #include "raw/stats.h"
+#include "world/effect.h"
 
 s32 Player::init()
 {
@@ -48,6 +49,16 @@ s32 Player::init()
         5.0f
     );
 
+
+    // parent为nullptr, 在死亡的时候才会添加到scene
+    effect_dead_ = Effect::add_effect(
+        nullptr,
+        "../assets/effect/1764.png",
+        Vec2{0},
+        nullptr,
+        3.0f
+    );
+
     return 0;
 }
 
@@ -69,8 +80,7 @@ s32 Player::update(s64 now_ms, s64 delta_ms)
     move(delta_ms);
     sync_camera();
 
-    // TODO: 死亡判断
-    is_alive();
+    check_is_dead();
 
     return 0;
 }
@@ -214,6 +224,22 @@ s32 Player::change_state(bool moving)
         sprite_move_->set_active(false);
         sprite_idle_->set_active(true);
         sprite_idle_->copy_state(*sprite_move_);
+    }
+
+    return 0;
+}
+
+s32 Player::check_is_dead()
+{
+    if (! is_alive())
+    {
+        auto scene = G_GAME.get_curr_scene();
+        if (scene)
+        {
+            effect_dead_->set_pos(pos());
+            scene->add_child_safe(effect_dead_);
+            set_active(false);
+        }
     }
 
     return 0;

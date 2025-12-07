@@ -113,10 +113,11 @@ s32 Stats::take_damage(f32 damage)
     {
         hp_ = 0;
         is_alive_ = false;
+        LOG_INFO("{} is dead!", parent_ ? parent_->to_string() : "nullptr");
     }
 
     set_is_invincible(true);
-    invincible_timer_ = 1000; // 1000ms无敌时间
+    invincible_timer_ = 500; // 1000ms无敌时间
 
     return 0;
 }

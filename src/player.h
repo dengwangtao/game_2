@@ -5,6 +5,7 @@
 
 
 class SpriteAnim;
+class Effect;
 
 class Player : public Actor
 {
@@ -23,8 +24,11 @@ public:
     s32 check_state();
     s32 change_state(bool moving);
 
+    s32 check_is_dead();
+
 protected:
     SpriteAnim* sprite_idle_ = nullptr;
     SpriteAnim* sprite_move_ = nullptr;
+    Effect* effect_dead_ = nullptr;
     bool is_moving_ = false;
 };

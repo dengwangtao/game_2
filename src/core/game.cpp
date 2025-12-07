@@ -129,6 +129,13 @@ s32 Game::update(s64 now_ms, s64 delta_ms)
     if (curr_scene_)
     {
         curr_scene_->update(now_ms, delta_ms);
+        static s64 total_ms = 0;
+        total_ms += delta_ms;
+        if (total_ms >= 5000)
+        {
+            curr_scene_->log_obj_tree();
+            total_ms = 0;
+        }
     }
     return 0;
 }

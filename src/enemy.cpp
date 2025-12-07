@@ -54,7 +54,7 @@ s32 Enemy::init()
         100.0f,
         50.0f,
         50.0f,
-        10.0f,
+        20.0f,
         5.0f
     );
 
@@ -63,18 +63,20 @@ s32 Enemy::init()
 
 s32 Enemy::update(s64 now_ms, s64 delta_ms)
 {
-  Actor::update(now_ms, delta_ms);
+    Actor::update(now_ms, delta_ms);
 
-  if (target_)
-  {
-    aim_target(*target_);
-  }
+    if (target_ && target_->is_alive())
+    {
+        aim_target(*target_);
+        
+        move(delta_ms);
 
-  move(delta_ms);
+        attack();
+    }
 
-  attack();
+    
 
-  return 0;
+    return 0;
 }
 
 s32 Enemy::render()
@@ -100,7 +102,7 @@ s32 Enemy::destroy()
 
 s32 Enemy::attack()
 {
-    if (collider_ && target_->get_collider())
+    if (collider_ && target_ && target_->get_collider())
     {
         if (collider_->is_colliding(*target_->get_collider()))
         {

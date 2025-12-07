@@ -2,6 +2,7 @@
 #include "player.h"
 
 #include "enemy.h"
+#include "world/effect.h"
 
 
 s32 SceneMain::init()
@@ -18,9 +19,28 @@ s32 SceneMain::init()
     add_child(player_);
 
 
+    srand(G_GAME.now_ms());
     for (s32 i = 0; i < 1; ++ i)
     {
-        srand(G_GAME.now_ms());
+        auto enemy = new Enemy();
+        enemy->init();
+        enemy->set_target(player_);
+
+
+
+        auto offset = Vec2{
+            std::rand() % 400 + 100,
+            std::rand() % 400 + 100
+        };
+
+        Effect::add_effect(
+            this,
+            "../assets/effect/184_3.png",
+            player_->pos() + offset,
+            enemy
+        );
+        
+        /*
         auto enemy = new Enemy();
         enemy->init();
         auto offset = Vec2{
@@ -30,6 +50,7 @@ s32 SceneMain::init()
         enemy->set_pos(player_->pos() + offset);
         enemy->set_target(player_);
         add_child(enemy);
+        */
     }
 
     return 0;

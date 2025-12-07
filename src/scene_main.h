@@ -14,6 +14,9 @@ public:
     s32 render() override;
     s32 clean() override;
 
+    std::string to_string() const override
+    { return "SceneMain:" + std::format("{:x}", (uintptr_t)this); }
+
 private:
     s32 render_background();
 

@@ -22,6 +22,8 @@ class Sprite : public ObjectAffiliate
 
 public:
     s32 render() override;
+    std::string to_string() const override
+    { return "Sprite:" + std::format("{:x}", (uintptr_t)this); }
 
     Texture& get_texture() { return texture_; }
     virtual void set_texture(const Texture& texture);
