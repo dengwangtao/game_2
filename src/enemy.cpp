@@ -7,6 +7,7 @@
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
 #include "raw/stats.h"
+#include "world/effect.h"
 
 s32 Enemy::init()
 {
@@ -168,4 +169,22 @@ s32 Enemy::change_state(State state)
     state_ = state;
     sprite_current_->set_active(true);
     return 0;
+}
+
+Enemy* Enemy::add_enemy(Object* parent, const Vec2& pos, Player* player)
+{
+    auto enemy = new Enemy();
+    enemy->init();
+    enemy->set_target(player);
+
+
+    Effect::add_effect(
+        parent,
+        "../assets/effect/184_3.png",
+        pos,
+        enemy
+    );
+
+
+    return enemy;
 }

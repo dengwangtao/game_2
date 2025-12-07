@@ -18,40 +18,9 @@ s32 SceneMain::init()
     player_->set_pos(world_size_ / 2.0f);
     add_child(player_);
 
-
-    srand(G_GAME.now_ms());
-    for (s32 i = 0; i < 1; ++ i)
-    {
-        auto enemy = new Enemy();
-        enemy->init();
-        enemy->set_target(player_);
-
-
-
-        auto offset = Vec2{
-            std::rand() % 400 + 100,
-            std::rand() % 400 + 100
-        };
-
-        Effect::add_effect(
-            this,
-            "../assets/effect/184_3.png",
-            player_->pos() + offset,
-            enemy
-        );
-        
-        /*
-        auto enemy = new Enemy();
-        enemy->init();
-        auto offset = Vec2{
-            std::rand() % 400 + 100,
-            std::rand() % 400 + 100
-        };
-        enemy->set_pos(player_->pos() + offset);
-        enemy->set_target(player_);
-        add_child(enemy);
-        */
-    }
+    spawner_ = new Spawner();
+    spawner_->set_target_player(player_);
+    add_child(spawner_);
 
     return 0;
 }

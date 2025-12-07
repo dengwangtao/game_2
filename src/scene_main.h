@@ -2,6 +2,7 @@
 
 
 #include "core/scene.h"
+#include "spawner.h"
 
 class Player;
 
@@ -22,4 +23,5 @@ private:
 
     
     Player* player_ = nullptr;
+    Spawner* spawner_ = nullptr;
 };

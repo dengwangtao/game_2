@@ -40,6 +40,14 @@ public:
     void set_target(Actor* target) { target_ = target; }
     Actor* get_target() const { return target_; }
 
+
+
+    static Enemy* add_enemy(
+        Object* parent,
+        const Vec2& pos,
+        Player* player
+    );
+
 protected:
     Actor* target_ = nullptr;
 
