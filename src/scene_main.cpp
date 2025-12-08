@@ -39,28 +39,7 @@ s32 SceneMain::init()
 s32 SceneMain::handle_events(SDL_Event& event)
 {
     Scene::handle_events(event);
-
-    if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN
-        && event.button.button == SDL_BUTTON_LEFT)
-    {
-        auto world_pos = screen2world(Vec2{event.button.x, event.button.y});
-        
-        LOG_DEBUG("Mouse left click to screen({}, {}) world({}, {})",
-            event.button.x, event.button.y,
-            world_pos.x, world_pos.y
-        );
-
-
-        Spell::add_spell(
-            this,
-            "../assets/effect/Thunderstrike w blur.png",
-            world_pos,
-            50.0f,
-            3.0f,
-            Anchor::BOTTOM_CENTER
-        );
-    }
-
+    
     return 0;
 }
 

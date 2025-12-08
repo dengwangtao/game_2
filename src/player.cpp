@@ -7,6 +7,7 @@
 #include "affiliate/collider.h"
 #include "raw/stats.h"
 #include "world/effect.h"
+#include "weapon_thunder.h"
 
 s32 Player::init()
 {
@@ -58,6 +59,15 @@ s32 Player::init()
         nullptr,
         3.0f
     );
+
+
+    // 添加雷武
+    Weapon::add_weapon<WeaponThunder>(
+        this,
+        1000,
+        15    // 魔法消耗15
+    );
+
 
     return 0;
 }
