@@ -43,8 +43,9 @@ s32 Scene::clean()
 }
 
 
-void Scene::add_child(Object* obj)
+void Scene::on_add_child(Object* obj)
 {
+    Object::on_add_child(obj);
     if (auto* obj_world = dynamic_cast<ObjectWorld*>(obj))
     {
         childern_world_.insert(obj_world);
@@ -55,13 +56,12 @@ void Scene::add_child(Object* obj)
         childern_screen_.insert(obj_screen);
         LOG_TRACE("Added ObjectScreen child");
     }
-
-    children_.insert(obj);
-    LOG_TRACE("Added generic child");
 }
 
-void Scene::remove_child(Object* obj)
+void Scene::on_remove_child(Object* obj)
 {
+    Object::on_remove_child(obj);
+
     if (auto* obj_world = dynamic_cast<ObjectWorld*>(obj))
     {
         childern_world_.erase(obj_world);
@@ -72,9 +72,4 @@ void Scene::remove_child(Object* obj)
         childern_screen_.erase(obj_screen);
         LOG_TRACE("Removed ObjectScreen child");
     }
-    
-    children_.erase(obj);
-    LOG_TRACE("Removed generic child");
 }
-
-

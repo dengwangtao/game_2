@@ -59,36 +59,36 @@ do
 }
 
 bool Collider::is_colliding(const Collider& other) const {
-  if (!parent_ || !other.parent_) {
-    LOG_WARN(
-        "Cannot perform collision detection: one of the colliders has no "
-        "parent");
+    if (!parent_ || !other.parent_) {
+        LOG_WARN(
+            "Cannot perform collision detection: one of the colliders has no "
+            "parent");
+        return false;
+    }
+
+    if (!is_aabb_colliding(other))
+    {
+        return false;
+    }
+
+    // 进一步的精确碰撞检测可以在这里实现
+
+    if (get_type() == Type::CIRCLE && other.get_type() == Type::CIRCLE) {
+        // 圆形碰撞检测
+        f32 radius1 = size_.x / 2.0f;
+        f32 radius2 = other.size_.x / 2.0f;
+
+        auto pos1 = parent_->pos() + offset_ + radius1;
+        auto pos2 = other.parent_->pos() + other.offset_ + radius2;
+
+        f32 dist_sq = glm::length(pos1 - pos2);
+
+        return dist_sq <= radius1 + radius2;
+    }
+
+    // TODO: 添加其他类型的碰撞检测（如矩形与矩形，圆形与矩形等）
+
     return false;
-  }
-
-  if (!is_aabb_colliding(other))
-  {
-    return false;
-  }
-
-  // 进一步的精确碰撞检测可以在这里实现
-
-  if (get_type() == Type::CIRCLE && other.get_type() == Type::CIRCLE) {
-    // 圆形碰撞检测
-    f32 radius1 = size_.x / 2.0f;
-    f32 radius2 = other.size_.x / 2.0f;
-
-    auto pos1 = parent_->pos() + offset_ + radius1;
-    auto pos2 = other.parent_->pos() + other.offset_ + radius2;
-
-    f32 dist_sq = glm::length(pos1 - pos2);
-
-    return dist_sq <= radius1 + radius2;
-  }
-
-  // TODO: 添加其他类型的碰撞检测（如矩形与矩形，圆形与矩形等）
-
-  return false;
 }
 
 bool Collider::is_aabb_colliding(const Collider& other) const

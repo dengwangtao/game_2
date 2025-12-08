@@ -33,8 +33,12 @@ public:
     Vec2 get_world_size() const { return world_size_; }
 
 
-    void add_child(Object* obj) override;
-    void remove_child(Object* obj) override;
+    void on_add_child(Object* obj) override;
+    void on_remove_child(Object* obj) override;
+
+    std::unordered_set<ObjectWorld*>& get_world_children() { return childern_world_; }
+    std::unordered_set<ObjectScreen*>& get_screen_children() { return childern_screen_; }
+
 
 protected:
     Vec2 camera_pos_ = Vec2{0};

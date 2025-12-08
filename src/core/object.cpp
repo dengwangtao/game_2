@@ -5,13 +5,23 @@
 #include <functional>
 
 template<class F>
-void for_children(std::unordered_set<Object*>& children,
-                  std::vector<Object*>& to_add,
-                  F&& fn)
+void for_children(
+    Object* this_ptr,
+    std::unordered_set<Object*>& children,
+    std::vector<Object*>& to_add,
+    std::vector<Object*>& to_del,
+    F&& fn)
 {
+    // 先处理待删除的children
+    for (auto* ptr : to_del)
+    {
+        this_ptr->remove_child(ptr);
+    }
+    to_del.clear();
+
     for (auto* ptr : to_add)
     {
-        children.insert(ptr);
+        this_ptr->add_child(ptr);
     }
     to_add.clear();
 
@@ -20,21 +30,19 @@ void for_children(std::unordered_set<Object*>& children,
         auto* c = *it;
         if (c->is_marked_for_delete())
         {
-            it = children.erase(it);
-            c->clean();
-            delete c;
+            this_ptr->remove_child_safe(c);
         }
         else
         {
             fn(c);
-            ++it;
         }
+        ++it;
     }
 }
 
 s32 Object::handle_events(SDL_Event& event)
 {
-    for_children(children_, children_to_add_, [&](Object* child)
+    for_children(this, children_, children_to_add_, children_to_del_, [&](Object* child)
     {
         if (! child->is_active()) return;
         child->handle_events(event);
@@ -45,7 +53,7 @@ s32 Object::handle_events(SDL_Event& event)
 
 s32 Object::update(s64 now_ms, s64 delta_ms)
 {
-    for_children(children_, children_to_add_, [&](Object* child)
+    for_children(this, children_, children_to_add_, children_to_del_, [&](Object* child)
     {
         if (! child->is_active()) return;
         child->update(now_ms, delta_ms);
@@ -55,7 +63,7 @@ s32 Object::update(s64 now_ms, s64 delta_ms)
 
 s32 Object::render()
 {
-    for_children(children_, children_to_add_, [&](Object* child)
+    for_children(this, children_, children_to_add_, children_to_del_, [&](Object* child)
     {
         if (! child->is_active()) return;
         child->render();
@@ -67,7 +75,7 @@ s32 Object::clean()
 {
     LOG_DEBUG("Cleaning Object and its children: {}", to_string());
 
-    for_children(children_, children_to_add_, [&](Object* child)
+    for_children(this, children_, children_to_add_, children_to_del_, [&](Object* child)
     {
         child->clean();
         delete child;

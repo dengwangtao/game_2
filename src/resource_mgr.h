@@ -132,7 +132,7 @@ public:
             return it->second;
         }
         LOG_INFO("Loading resource: {}", key);
-        T* resource = ResourceTraits<T>::load(filename, std::forward<Args>(args)...);
+        T* resource = ResourceTraits<T>::load(std::string("C:\\Users\\22379\\Documents\\dwt_code\\game_2\\assets\\") + filename, std::forward<Args>(args)...);
         if (resource == nullptr)
         {
             LOG_ERROR("Failed to load resource: {}", key);

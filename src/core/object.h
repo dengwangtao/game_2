@@ -28,8 +28,22 @@ public:
 
     std::unordered_set<Object*>& get_children() { return children_; }
     virtual void add_child_safe(Object* obj) { children_to_add_.push_back(obj); }
-    virtual void add_child(Object* obj) { children_.insert(obj); }
-    virtual void remove_child(Object* obj) { children_.erase(obj); }
+    void add_child(Object* obj)
+    {
+        children_.insert(obj);
+        on_add_child(obj);
+    }
+    virtual void on_add_child(Object* obj) { }
+
+
+    virtual void remove_child_safe(Object* obj) { children_to_del_.push_back(obj); }
+    void remove_child(Object* obj)
+    {
+        children_.erase(obj);
+        on_remove_child(obj);
+    }
+    virtual void on_remove_child(Object* obj) { }
+
 
 
     template <class T>
@@ -37,6 +51,13 @@ public:
     bool is() const noexcept
     {
         return dynamic_cast<const T*>(this) != nullptr;
+    }
+
+    template <class T>
+    requires std::derived_from<T, Object>
+    T* as() noexcept
+    {
+        return dynamic_cast<T*>(this);
     }
 
 
@@ -50,6 +71,7 @@ protected:
 
     std::unordered_set<Object*> children_; // children objects
     std::vector<Object*> children_to_add_; // 待添加到容器内的children
+    std::vector<Object*> children_to_del_; // 待删除的children
 
     bool is_active_ = true;
     bool mark_delete_ = false;
