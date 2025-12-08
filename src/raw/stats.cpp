@@ -109,7 +109,7 @@ s32 Stats::take_damage(f32 damage)
 
 
     hp_ -= damage;
-    if (hp_ < 0)
+    if (hp_ <= 0)
     {
         hp_ = 0;
         is_alive_ = false;

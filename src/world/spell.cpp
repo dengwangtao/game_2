@@ -55,7 +55,7 @@ Spell* Spell::add_spell(Object* parent, const String& file_path,
     auto collider = Collider::add_collider(
         spell,
         Collider::Type::CIRCLE,
-        Vec2{sprite->get_size().x * 0.8f}, // 直径
+        Vec2{sprite->get_size().x * 0.5f}, // 直径
         Anchor::CENTER
     );
 

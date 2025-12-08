@@ -66,7 +66,7 @@ s32 Enemy::update(s64 now_ms, s64 delta_ms)
 {
     Actor::update(now_ms, delta_ms);
 
-    if (target_ && target_->is_alive())
+    if (is_alive() && target_ && target_->is_alive())
     {
         aim_target(*target_);
         
@@ -75,7 +75,9 @@ s32 Enemy::update(s64 now_ms, s64 delta_ms)
         attack();
     }
 
-    
+    check_state();
+
+    try_destroy();
 
     return 0;
 }
@@ -91,7 +93,7 @@ s32 Enemy::render()
     return 0;
 }
 
-s32 Enemy::destroy()
+s32 Enemy::try_destroy()
 {
     if (sprite_die_->is_finished())
     {
@@ -131,7 +133,24 @@ s32 Enemy::aim_target(const Actor& actor) {
 
 s32 Enemy::check_state()
 {
-    // TODO:
+    State new_state;
+    if (! is_alive())
+    {
+        new_state = State::DIE;
+    }
+    else if (stats_->get_is_invincible())
+    {
+        new_state = State::HURT;
+    }
+    else
+    {
+        new_state = State::NORMAL;
+    }
+
+    if (new_state != state_)
+    {
+        change_state(new_state);
+    }
 
     return 0;
 }

@@ -56,7 +56,7 @@ s32 SceneMain::handle_events(SDL_Event& event)
             "../assets/effect/Thunderstrike w blur.png",
             world_pos,
             50.0f,
-            1.0f,
+            3.0f,
             Anchor::BOTTOM_CENTER
         );
     }

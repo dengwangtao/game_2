@@ -26,7 +26,7 @@ public:
     std::string to_string() const override
     { return "Enemy:" + std::format("{:x}", (uintptr_t)this); }
 
-    s32 destroy();
+    s32 try_destroy();
 
     s32 attack();
     s32 aim_target(const Actor& actor);

@@ -26,6 +26,6 @@ public:
 protected:
     s32 num_ = 4;
     s64 timer_ = 0;
-    s64 interval_ = 3000; // ms
+    s64 interval_ = 5000; // ms
     Player* target_player_ = nullptr;
 };
