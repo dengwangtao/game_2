@@ -4,6 +4,7 @@
 
 #include "comm/singleton.h"
 #include "comm/comm_def.h"
+#include <SDL3/SDL_mouse.h>
 
 
 struct SDL_Window;
@@ -48,6 +49,9 @@ public:
     SDL_Window* get_window() const { return window_; }
     SDL_Renderer* get_renderer() const { return renderer_; }
 
+    const Vec2& get_mouse_pos() const { return mouse_pos_; }
+    SDL_MouseButtonFlags get_mouse_button_state() const { return mouse_button_state_; }
+
 private:
     Vec2 screen_size_ = Vec2{0};
     bool is_running_ = true;
@@ -62,6 +66,9 @@ private:
     s64 now_ms_;
 
     Scene* curr_scene_ = nullptr;
+
+    Vec2 mouse_pos_ = Vec2{0};
+    SDL_MouseButtonFlags mouse_button_state_ = 0;
 };
 
 

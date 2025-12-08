@@ -126,6 +126,8 @@ s32 Game::handle_events()
 
 s32 Game::update(s64 now_ms, s64 delta_ms)
 {
+    mouse_button_state_ = SDL_GetMouseState(&mouse_pos_.x, &mouse_pos_.y);
+
     if (curr_scene_)
     {
         curr_scene_->update(now_ms, delta_ms);
@@ -137,6 +139,7 @@ s32 Game::update(s64 now_ms, s64 delta_ms)
             total_ms = 0;
         }
     }
+    
     return 0;
 }
 
@@ -151,7 +154,7 @@ s32 Game::render()
     }
 
     // TODO: 测试代码, 后面需要删除
-    if (1)
+    if (0)
     {
         auto mouse_pos = Vec2(0, 0);
 

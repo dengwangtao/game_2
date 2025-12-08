@@ -3,7 +3,7 @@
 
 #include "enemy.h"
 #include "world/effect.h"
-
+#include "screen/ui_mouse.h"
 
 s32 SceneMain::init()
 {
@@ -21,6 +21,15 @@ s32 SceneMain::init()
     spawner_ = new Spawner();
     spawner_->set_target_player(player_);
     add_child(spawner_);
+
+    SDL_HideCursor(); // 隐藏系统鼠标光标
+
+    UIMouse::add_ui_mouse(
+        this,
+        "../assets/UI/29.png",
+        "../assets/UI/30.png"
+    );
+
 
     return 0;
 }
