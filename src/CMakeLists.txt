@@ -31,7 +31,7 @@ target_include_directories(${TARGET} PRIVATE
 target_compile_definitions(${TARGET} PRIVATE
     # SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
     SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG
-    DWT_DEBUG
+    # DWT_DEBUG
 )
 
 target_link_libraries(

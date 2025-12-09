@@ -30,7 +30,7 @@ s32 WeaponThunder::handle_events(SDL_Event& event)
                 nullptr,
                 "../assets/effect/Thunderstrike w blur.png",
                 world_pos,
-                50.0f,
+                40.0f,
                 3.0f,
                 Anchor::BOTTOM_CENTER
             );

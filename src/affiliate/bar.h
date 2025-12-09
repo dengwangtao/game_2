@@ -8,6 +8,36 @@
 #include "comm/log_def.h"
 
 
+struct BarColorSeq
+{
+    struct ColorPoint
+    {
+        f32 ratio; // 0.0 ~ 1.0, <=ratio就使用该颜色
+        Color color;
+    };
+
+    std::vector<ColorPoint> seq;
+};
+
+const BarColorSeq DEFAULT_HP_BAR_COLOR_SEQ = {
+    {
+        {0.25f, Color{255, 0, 0, 255}},    // 红色
+        {0.5f, Color{255, 165, 0, 255}},   // 橙色
+        {0.75f, Color{255, 255, 0, 255}},  // 黄色
+        {1.0f, Color{0, 255, 0, 255}}      // 绿色
+    }
+};
+
+const BarColorSeq DEFAULT_MANA_BAR_COLOR_SEQ = {
+    {
+        {0.25f, Color{173, 216, 230, 255}}, // 更浅的蓝色
+        {0.5f, Color{135, 206, 250, 255}},  // 浅蓝色
+        {0.75f, Color{0, 0, 255, 255}},     // 蓝色
+        {1.0f, Color{0, 0, 128, 255}}       // 深蓝色
+    }
+};
+
+
 template <typename T>
 requires std::is_arithmetic_v<T>
 class Bar : public ObjectAffiliate
@@ -33,14 +63,32 @@ public:
             Color{255, 255, 255, 255}
         );
 
+        f32 ratio = (*value_) / (*max_value_);
+        Color color = choose_color(ratio);
+
         G_GAME.draw_rect(
             pos + Vec2{1.0f, 1.0f},
-            (get_size() - Vec2{2.0f, 2.0f}) * ((*value_) / (*max_value_)),
-            Color{0, 255, 0, 255}
+            (get_size() - Vec2{2.0f, 2.0f}) * Vec2{ratio, 1.0f},
+            color
         );
 
         return 0;
     }
+
+    Color choose_color(f32 ratio) const
+    {
+        Color c{0, 255, 0, 255}; // 默认绿色
+
+        for (const auto& point : color_seq_.seq)
+        {
+            if (ratio <= point.ratio)
+            {
+                return point.color;
+            }
+        }
+        return c;
+    }
+
     std::string to_string() const override
     { return "Bar:" + std::format("{:x}", (uintptr_t)this); }
 
@@ -51,13 +99,16 @@ public:
     void set_value_ptr(T* value) { value_ = value; }
     void set_max_value_ptr(T* max_value) { max_value_ = max_value; }
 
+    void set_color_seq(const BarColorSeq& color_seq) { color_seq_ = color_seq; }
+
 
     static Bar<T>* add_bar(
         Actor* owner,
         T* value,
         T* max_value,
         const Vec2& size,
-        const Vec2& offset
+        const Vec2& offset,
+        const BarColorSeq& color_seq = DEFAULT_HP_BAR_COLOR_SEQ
     )
     {
         auto* bar = new Bar<T>();
@@ -68,6 +119,7 @@ public:
         bar->set_max_value_ptr(max_value);
         bar->set_size(size);
         bar->set_offset(offset);
+        bar->set_color_seq(color_seq);
 
         if(owner) owner->add_child(bar);
 
@@ -78,6 +130,7 @@ private:
     Actor* owner_ = nullptr; // 所属的角色
     T* value_ = nullptr; // 指向角色的某个属性值
     T* max_value_ = nullptr; // 指向角色的某个属性最大值
+    BarColorSeq color_seq_;
 };
 
 

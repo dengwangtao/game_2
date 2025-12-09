@@ -69,12 +69,25 @@ s32 Player::init()
         15    // 魔法消耗15
     );
 
+
+    // 血条
     Bar<f32>::add_bar(
         this,
         stats->get_ptr_hp(),
         stats->get_ptr_max_hp(),
         Vec2{collider->get_size().x, 10},
-        Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f}
+        Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f},
+        DEFAULT_HP_BAR_COLOR_SEQ
+    );
+
+    // 魔法条
+    Bar<f32>::add_bar(
+        this,
+        stats->get_ptr_mana(),
+        stats->get_ptr_max_mana(),
+        Vec2{collider->get_size().x, 10},
+        Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f} + Vec2{0, 12},
+        DEFAULT_MANA_BAR_COLOR_SEQ
     );
 
     return 0;
