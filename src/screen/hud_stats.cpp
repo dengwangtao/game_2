@@ -58,7 +58,6 @@ s32 HudStats::render()
     if (sp_hp_icon && sp_hp && sp_hp_bg)
     {
         sp_hp_icon->set_size(SP_ICON_SIZE);
-        sp_hp_icon->set_offset(Vec2{20, 20});
 
 
         constexpr Vec2 SP_HP_SIZE = Vec2{200, 20};
@@ -82,7 +81,7 @@ s32 HudStats::render()
     if (sp_mana_icon)
     {
         sp_mana_icon->set_size(SP_ICON_SIZE);
-        sp_mana_icon->set_offset(Vec2{280, 20});
+        sp_mana_icon->set_offset(Vec2{250, 0});
 
         constexpr Vec2 SP_MANA_SIZE = Vec2{200, 20};
         auto pos = sp_mana_icon->get_offset()
@@ -110,6 +109,7 @@ void HudStats::bind_stats(f32* hp, f32* max_hp, f32* mana, f32* max_mana)
 
 HudStats* HudStats::add_hud_stats(
     Object* parent, Actor* target,
+    const Vec2& screen_pos,
     const std::array<String, LEN_HUDSTAT_TYPE>& file_paths,
     f32* hp, f32* max_hp, f32* mana, f32* max_mana
 )
@@ -147,6 +147,7 @@ HudStats* HudStats::add_hud_stats(
 
     hud_stats->set_target(target);
     hud_stats->bind_stats(hp, max_hp, mana, max_mana);
+    hud_stats->set_render_pos(screen_pos);
 
     if (parent) parent->add_child(hud_stats);
 

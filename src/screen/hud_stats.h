@@ -54,6 +54,7 @@ public:
     static HudStats* add_hud_stats(
         Object* parent,
         Actor* target,
+        const Vec2& screen_pos,
         const std::array<String, LEN_HUDSTAT_TYPE>& file_paths,
         f32* hp, f32* max_hp, f32* mana, f32* max_mana
     );

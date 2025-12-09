@@ -96,6 +96,7 @@ s32 Player::init()
     HudStats::add_hud_stats(
         game_.get_curr_scene(),
         this,
+        Vec2{20, 20},
         {
             "../assets/UI/bar_red.png",     // hp
             "../assets/UI/bar_bg.png",      // hp bg
