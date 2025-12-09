@@ -9,7 +9,8 @@
 protected: type name##_ = def; \
     public: \
      type get_##name() const { return name##_; } \
-    void set_##name(type value) { name##_ = value; }
+    void set_##name(type value) { name##_ = value; }\
+    type* get_ptr_##name() { return &name##_; }
 
 #define PROP(type, name) PROP_DEF(type, name, type{})
 

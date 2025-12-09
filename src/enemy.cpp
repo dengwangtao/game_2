@@ -8,6 +8,7 @@
 #include "affiliate/collider.h"
 #include "raw/stats.h"
 #include "world/effect.h"
+#include "affiliate/bar.h"
 
 s32 Enemy::init()
 {
@@ -57,6 +58,15 @@ s32 Enemy::init()
         50.0f,
         20.0f,
         5.0f
+    );
+
+
+    Bar<f32>::add_bar(
+        this,
+        stats->get_ptr_hp(),
+        stats->get_ptr_max_hp(),
+        Vec2{collider->get_size().x, 10},
+        Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f}
     );
 
     return 0;

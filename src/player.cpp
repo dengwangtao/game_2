@@ -8,6 +8,7 @@
 #include "raw/stats.h"
 #include "world/effect.h"
 #include "weapon_thunder.h"
+#include "affiliate/bar.h"
 
 s32 Player::init()
 {
@@ -68,6 +69,13 @@ s32 Player::init()
         15    // 魔法消耗15
     );
 
+    Bar<f32>::add_bar(
+        this,
+        stats->get_ptr_hp(),
+        stats->get_ptr_max_hp(),
+        Vec2{collider->get_size().x, 10},
+        Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f}
+    );
 
     return 0;
 }
