@@ -58,7 +58,7 @@ s32 HudStats::render()
     if (sp_hp_icon && sp_hp && sp_hp_bg)
     {
         sp_hp_icon->set_size(SP_ICON_SIZE);
-        sp_hp_icon->set_offset(Vec2{10, 10});
+        sp_hp_icon->set_offset(Vec2{20, 20});
 
 
         constexpr Vec2 SP_HP_SIZE = Vec2{200, 20};
@@ -82,7 +82,7 @@ s32 HudStats::render()
     if (sp_mana_icon)
     {
         sp_mana_icon->set_size(SP_ICON_SIZE);
-        sp_mana_icon->set_offset(Vec2{250, 10});
+        sp_mana_icon->set_offset(Vec2{280, 20});
 
         constexpr Vec2 SP_MANA_SIZE = Vec2{200, 20};
         auto pos = sp_mana_icon->get_offset()
