@@ -38,7 +38,8 @@ s32 Sprite::render()
     G_GAME.render_texture(
         texture_,
         parent_->get_render_pos() + offset_,
-        size_
+        size_,
+        percent_
     );
 
     return 0;

@@ -34,7 +34,9 @@ public:
     s32 draw_debug_text(const Vec2& position, const String& text, const Color& color= Color{255, 255, 255, 255});
 
     s32 render_texture(const Texture& texture,
-        const Vec2& position, const Vec2& size);
+        const Vec2& position, const Vec2& size,
+        Vec2 percent = Vec2{1.0f, 1.0f}
+    );
 
 
     s64 now_ms() const { return now_ms_; }

@@ -7,7 +7,7 @@
 template<class F>
 void for_children(
     Object* this_ptr,
-    std::unordered_set<Object*>& children,
+    Object::ChildrenSet& children,
     std::vector<Object*>& to_add,
     std::vector<Object*>& to_del,
     F&& fn)
@@ -98,4 +98,9 @@ void Object::log_obj_tree() const noexcept
     };
 
     dfs(this, 0);
+}
+
+bool ObjectZOrder::operator()(const Object* a, const Object* b) const
+{
+    return a->get_z_index() < b->get_z_index();
 }

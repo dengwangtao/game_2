@@ -31,6 +31,9 @@ public:
     bool is_finished() const { return is_finished_; }
     void set_finished(bool finished) { is_finished_ = finished; }
 
+    const Vec2& get_percent() const { return percent_; }
+    void set_percent(const Vec2& percent) { percent_ = percent; }
+
 
     template<std::derived_from<Sprite> T>
     static T* add_sprite(
@@ -44,6 +47,7 @@ public:
 
 protected:
     Texture texture_;
+    Vec2 percent_ = Vec2{1.0f, 1.0f}; // 纹理显示百分比
     bool is_finished_ = false;
 
 };
@@ -64,7 +68,7 @@ inline T* Sprite::add_sprite(ObjectScreen* parent, const String& file_path,
     sprite->set_active(is_active);
     sprite->set_offset_by_anchor(anchor);
 
-    parent->add_child(sprite);
+    if (parent) parent->add_child(sprite);
 
     return sprite;
 }

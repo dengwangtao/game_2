@@ -9,6 +9,7 @@
 #include "world/effect.h"
 #include "weapon_thunder.h"
 #include "affiliate/bar.h"
+#include "screen/hud_stats.h"
 
 s32 Player::init()
 {
@@ -88,6 +89,25 @@ s32 Player::init()
         Vec2{collider->get_size().x, 10},
         Vec2{collider->get_size().x} * Vec2{-0.5f, 0.5f} + Vec2{0, 12},
         DEFAULT_MANA_BAR_COLOR_SEQ
+    );
+
+
+    // 添加HUD
+    HudStats::add_hud_stats(
+        game_.get_curr_scene(),
+        this,
+        {
+            "../assets/UI/bar_red.png",     // hp
+            "../assets/UI/bar_bg.png",      // hp bg
+            "../assets/UI/Red Potion.png",  // hp icon
+            "../assets/UI/bar_blue.png",    // mana
+            "../assets/UI/bar_bg.png",      // mana bg
+            "../assets/UI/Blue Potion.png"  // mana icon
+        },
+        stats->get_ptr_hp(),
+        stats->get_ptr_max_hp(),
+        stats->get_ptr_mana(),
+        stats->get_ptr_max_mana()
     );
 
     return 0;

@@ -346,19 +346,27 @@ s32 Game::draw_debug_text(const Vec2& position, const String& text, const Color&
     return 0;
 }
 
-s32 Game::render_texture(const Texture& texture, const Vec2& position, const Vec2& size)
+s32 Game::render_texture(const Texture& texture, const Vec2& position,
+    const Vec2& size, Vec2 percent)
 {
+    SDL_FRect src_rect = {
+        texture.rect.x,
+        texture.rect.y,
+        texture.rect.w * percent.x,
+        texture.rect.h * percent.y
+    };
+
     SDL_FRect dst_rect = {
         position.x,
         position.y,
-        size.x,
-        size.y
+        size.x * percent.x,
+        size.y * percent.y
     };
 
     SDL_RenderTextureRotated(
         renderer_,
         texture.texture,
-        &texture.rect,
+        &src_rect,
         &dst_rect,
         texture.angle,
         nullptr,
