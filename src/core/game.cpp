@@ -79,7 +79,10 @@ s32 Game::run()
         // 更新
         s64 now_ms = SDL_GetTicks();
         now_ms_ = now_ms;
-        update(now_ms, now_ms - last_frame_ns_ / NS_PER_MS);
+        if (! paused_)
+        {
+            update(now_ms, now_ms - last_frame_ns_ / NS_PER_MS);
+        }
 
         // 渲染
         render();
@@ -114,6 +117,23 @@ s32 Game::handle_events()
         if (event.type == SDL_EVENT_QUIT)
         {
             is_running_ = false;
+        }
+                
+        if (event.type == SDL_EVENT_KEY_DOWN
+            && event.key.scancode == SDL_SCANCODE_SPACE)
+        {
+            LOG_DEBUG("Space key pressed, toggling pause");
+            paused_ = !paused_;
+            if (paused_)
+            {
+                SDL_ShowCursor();
+                LOG_INFO("Game paused");
+            }
+            else
+            {
+                SDL_HideCursor();
+                LOG_INFO("Game resumed");
+            }
         }
 
         if (curr_scene_)

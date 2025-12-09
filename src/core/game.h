@@ -69,6 +69,8 @@ private:
 
     Vec2 mouse_pos_ = Vec2{0};
     SDL_MouseButtonFlags mouse_button_state_ = 0;
+
+    bool paused_ = false; // 游戏是否暂停
 };
 
 
