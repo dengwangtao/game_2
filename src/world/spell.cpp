@@ -33,7 +33,7 @@ s32 Spell::update(s64 now_ms, s64 delta_ms)
     return 0;
 }
 
-Spell* Spell::add_spell(Object* parent, const String& file_path,
+Spell* Spell::add_spell(Object* parent, Actor* spawner, const String& file_path,
                         const Vec2& pos, f32 damage, f32 scale, Anchor anchor)
 {
     Spell* spell = new Spell();
@@ -41,6 +41,7 @@ Spell* Spell::add_spell(Object* parent, const String& file_path,
 
     spell->set_world_pos(pos);
     spell->damage_ = damage;
+    spell->set_spawner(spawner);
 
     auto sprite = Sprite::add_sprite<SpriteAnim>(
         spell,
@@ -104,7 +105,7 @@ s32 Spell::attack()
         {
             LOG_TRACE("Spell hit an object!");
 
-            enemy->take_damage(damage_, nullptr);
+            enemy->take_damage(damage_, spawner_);
         }
     }
 

@@ -26,9 +26,13 @@ public:
     void set_stats(Stats* stats) { stats_ = stats; }
     Stats* get_stats() const { return stats_; }
 
+    s32 get_killed() const { return killed_; }
+    void set_killed(s32 killed) { killed_ = killed; }
+    void add_killed() { killed_ ++; }
+
 protected:
     Vec2 velocity_; // 速度
     f32 max_speed_= 100.0f; // 最大速度
     Stats* stats_ = nullptr; // 角色属性
-
+    s32 killed_ = 0; // 杀了多少个单位
 };

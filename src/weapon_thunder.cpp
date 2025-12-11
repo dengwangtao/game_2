@@ -28,6 +28,7 @@ s32 WeaponThunder::handle_events(SDL_Event& event)
 
             auto* spell = Spell::add_spell(
                 nullptr,
+                owner_,
                 "../assets/effect/Thunderstrike w blur.png",
                 world_pos,
                 40.0f,

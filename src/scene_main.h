@@ -5,6 +5,7 @@
 #include "spawner.h"
 
 class Player;
+class HUDText;
 
 class SceneMain : public Scene
 {
@@ -24,4 +25,5 @@ private:
     
     Player* player_ = nullptr;
     Spawner* spawner_ = nullptr;
+    HUDText* hud_score_text_ = nullptr;
 };

@@ -25,11 +25,22 @@ s32 Actor::take_damage(f32 damage, Actor* attacker)
 {
     if (stats_)
     {
+        bool alive = is_alive();
         s32 ret = stats_->take_damage(damage);
         if (ret == 0)
         {
             LOG_DEBUG("Actor {} took {} damage from Actor {}", to_string(), damage, attacker ? attacker->to_string() : "null");
+
+            if (alive && !is_alive())
+            {
+                if (attacker)
+                {
+                    attacker->add_killed();
+                    LOG_INFO("{} killed {}", attacker->to_string(), to_string());
+                }
+            }
         }
+        
     }
 
     return 0;

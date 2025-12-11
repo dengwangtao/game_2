@@ -20,7 +20,7 @@ s32 SceneMain::init()
     player_->init();
     player_->set_pos(world_size_ / 2.0f);
     add_child(player_);
-
+ 
     spawner_ = new Spawner();
     spawner_->set_target_player(player_);
     add_child(spawner_);
@@ -36,7 +36,7 @@ s32 SceneMain::init()
 
     Vec2 hud_text_size{300.0f, 50.0f};
 
-    HUDText::add_hud_text(
+    hud_score_text_ = HUDText::add_hud_text(
         this,
         "文本测试",
         Vec2{
@@ -63,6 +63,11 @@ s32 SceneMain::handle_events(SDL_Event& event)
 s32 SceneMain::update(s64 now_ms, s64 delta_ms)
 {
     Scene::update(now_ms, delta_ms);
+
+    if (hud_score_text_ && player_)
+    {
+        hud_score_text_->set_text("击杀数: " + std::to_string(player_->get_killed()));
+    }
 
     return 0;
 }
