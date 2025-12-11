@@ -113,6 +113,7 @@ s32 Player::init()
     );
 
 
+#ifdef DWT_DEBUG
     // 文本
     TextLabel::add_text(
         this,
@@ -120,6 +121,7 @@ s32 Player::init()
         "../assets/font/VonwaonBitmap-16px.ttf",
         20
     );
+#endif
 
     return 0;
 }
