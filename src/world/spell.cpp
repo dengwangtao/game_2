@@ -33,6 +33,23 @@ s32 Spell::update(s64 now_ms, s64 delta_ms)
     return 0;
 }
 
+void Spell::scale_size(f32 factor)
+{
+    if (sprite_)
+    {
+        sprite_->scale(factor);
+    }
+    if (collider_)
+    {
+        collider_->scale(factor);
+    }
+}
+
+void Spell::scale_damage(f32 factor)
+{
+    damage_ *= factor;
+}
+
 Spell* Spell::add_spell(Object* parent, Actor* spawner, const String& file_path,
                         const Vec2& pos, f32 damage, f32 scale, Anchor anchor)
 {
@@ -43,22 +60,16 @@ Spell* Spell::add_spell(Object* parent, Actor* spawner, const String& file_path,
     spell->damage_ = damage;
     spell->set_spawner(spawner);
 
-    auto sprite = Sprite::add_sprite<SpriteAnim>(
-        spell,
-        file_path,
-        anchor,
-        scale
-    );
+    auto sprite = Sprite::add_sprite<SpriteAnim>(spell, file_path, anchor, scale);
     sprite->set_loop(false);
     spell->set_sprite(sprite);
 
     // 添加碰撞器
     auto collider = Collider::add_collider(
-        spell,
-        Collider::Type::CIRCLE,
-        Vec2{sprite->get_size().x * 0.5f}, // 直径
-        Anchor::CENTER
-    );
+        spell, Collider::Type::CIRCLE, Vec2{sprite->get_size().x * 0.5f},  // 直径
+        Anchor::CENTER);
+    
+    spell->set_collider(collider);
 
     if (parent) parent->add_child(spell);
 

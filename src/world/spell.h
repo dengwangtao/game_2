@@ -5,6 +5,7 @@
 
 class SpriteAnim;
 class Actor;
+class Collider;
 
 class Spell : public ObjectWorld
 {
@@ -17,8 +18,14 @@ public:
     void set_sprite(SpriteAnim* sprite) { sprite_ = sprite; }
     SpriteAnim* get_sprite() const { return sprite_; }
 
+    Collider* get_collider() const { return collider_; }
+    void set_collider(Collider* collider) { collider_ = collider; }
+
     Actor* get_spawner() const { return spawner_; }
     void set_spawner(Actor* actor) { spawner_ = actor; }
+
+    void scale_size(f32 factor);
+    void scale_damage(f32 factor);
 
     static Spell* add_spell(
         Object* parent,
@@ -36,6 +43,7 @@ private:
 private:
 
     SpriteAnim* sprite_ = nullptr;
+    Collider* collider_ = nullptr;
     f32 damage_ = 30.0f;
     Actor* spawner_ = nullptr;
 };

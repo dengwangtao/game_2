@@ -13,8 +13,8 @@ public:
     s32 update(s64 now_ms, s64 delta_ms) override;
 
 
-    bool can_attack() const;
-    s32 attack(const Vec2& world_pos, Spell* spell);
+    bool can_attack(bool enhance=false) const; // enhance为强化技能
+    s32 attack(const Vec2& world_pos, Spell* spell, bool enhance=false);
 
 
     s64 get_cooldown_timer() const { return cooldown_timer_; }
@@ -36,9 +36,10 @@ public:
 
 protected:
     s64 cooldown_timer_ = 0; // 冷却计时器
-    s64 cooldown_duration_ = 1000; // 冷却持续时间，单位毫秒
+    s64 cooldown_duration_ = 500; // 冷却持续时间，单位毫秒
 
     s32 mana_cost_ = 10; // 魔法消耗
+    f32 enhance_cost_factor_ = 1.3f;
     Actor* owner_ = nullptr;
 };
 
