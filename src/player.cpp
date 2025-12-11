@@ -10,6 +10,7 @@
 #include "weapon_thunder.h"
 #include "affiliate/bar.h"
 #include "screen/hud_stats.h"
+#include "affiliate/text_label.h"
 
 s32 Player::init()
 {
@@ -109,6 +110,15 @@ s32 Player::init()
         stats->get_ptr_max_hp(),
         stats->get_ptr_mana(),
         stats->get_ptr_max_mana()
+    );
+
+
+    // 文本
+    TextLabel::add_text(
+        this,
+        "操纵玩家",
+        "../assets/font/VonwaonBitmap-16px.ttf",
+        20
     );
 
     return 0;

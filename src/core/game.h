@@ -5,10 +5,13 @@
 #include "comm/singleton.h"
 #include "comm/comm_def.h"
 #include <SDL3/SDL_mouse.h>
+// #include <SDL3_ttf/SDL_ttf.h>
 
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct TTF_TextEngine;
+struct TTF_Text;
 
 struct Texture;
 
@@ -38,6 +41,9 @@ public:
         Vec2 percent = Vec2{1.0f, 1.0f}
     );
 
+    // 文字函数
+    TTF_Text* create_ttf_text(const String& content, const String& font_path, s32 font_size=16);
+
 
     s64 now_ms() const { return now_ms_; }
 
@@ -50,6 +56,7 @@ public:
 
     SDL_Window* get_window() const { return window_; }
     SDL_Renderer* get_renderer() const { return renderer_; }
+    TTF_TextEngine* get_ttf_engine() const { return ttf_engine_; }
 
     const Vec2& get_mouse_pos() const { return mouse_pos_; }
     SDL_MouseButtonFlags get_mouse_button_state() const { return mouse_button_state_; }
@@ -59,6 +66,7 @@ private:
     bool is_running_ = true;
     SDL_Window* window_ = nullptr;
     SDL_Renderer* renderer_ = nullptr;
+    TTF_TextEngine* ttf_engine_ = nullptr;
     
     const u64 fps_ = 60;
     const u64 frame_duration_ = NS_PER_SEC / fps_; // in ns

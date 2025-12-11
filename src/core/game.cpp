@@ -59,6 +59,16 @@ s32 Game::init(const String &title, int width, int height)
     // 设置窗口逻辑分辨率
     SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
+    
+    // 创建字体引擎
+    ttf_engine_ = TTF_CreateRendererTextEngine(renderer_);
+    if (! ttf_engine_)
+    {
+        LOG_ERROR("TTF_CreateRendererTextEngine failed");
+        return -6;
+    }
+
+
 
     // 创建场景
     curr_scene_ = new SceneMain();
@@ -198,6 +208,12 @@ s32 Game::clean()
         curr_scene_->clean();
         delete curr_scene_;
         curr_scene_ = nullptr;
+    }
+
+    if (ttf_engine_)
+    {
+        TTF_DestroyRendererTextEngine(ttf_engine_);
+        ttf_engine_ = nullptr;
     }
 
     if (renderer_)
@@ -374,6 +390,24 @@ s32 Game::render_texture(const Texture& texture, const Vec2& position,
     );
     
     return 0;
+}
+
+TTF_Text* Game::create_ttf_text(const String& content, const String& font_path,
+                                s32 font_size)
+{
+    auto* ttf_text = TTF_CreateText(
+        ttf_engine_,
+        G_RESOURCE_MGR.loadResource<TTF_Font>(font_path, font_size),
+        content.c_str(),
+        content.length()
+    );
+
+    if (! ttf_text)
+    {
+        LOG_ERROR("TTF_CreateText failed for content: {}", content);
+        return nullptr;
+    }
+    return ttf_text;
 }
 
 std::pair<Vec2, Vec2> Game::GetCameraAABB() const
