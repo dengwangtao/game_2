@@ -19,7 +19,7 @@ constexpr size_t LEN_HUDSTAT_TYPE = static_cast<size_t>(HUDStatType::LEN_STAT_TY
 
 
 
-class HudStats : public ObjectScreen
+class HUDStats : public ObjectScreen
 {
 
 public:
@@ -51,7 +51,7 @@ public:
     }
 
 
-    static HudStats* add_hud_stats(
+    static HUDStats* add_hud_stats(
         Object* parent,
         Actor* target,
         const Vec2& screen_pos,

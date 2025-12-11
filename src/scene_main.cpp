@@ -6,6 +6,7 @@
 #include "screen/ui_mouse.h"
 #include "comm/log_def.h"
 #include "world/spell.h"
+#include "screen/hud_text.h"
 
 s32 SceneMain::init()
 {
@@ -32,6 +33,22 @@ s32 SceneMain::init()
         "../assets/UI/30.png"
     );
 
+
+    Vec2 hud_text_size{300.0f, 50.0f};
+
+    HUDText::add_hud_text(
+        this,
+        "文本测试",
+        Vec2{
+            game_.get_screen_size().x - hud_text_size.x / 2.0f - 20,
+            20 + hud_text_size.y / 2.0f
+        },
+        hud_text_size,
+        "../assets/font/VonwaonBitmap-16px.ttf",
+        20,
+        "../assets/UI/Textfield_01.png",
+        Anchor::CENTER
+    );
 
     return 0;
 }

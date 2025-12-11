@@ -6,6 +6,8 @@
 class ObjectScreen : public Object
 {
 public:
+    s32 render() override;
+
 
     virtual void set_render_pos(const Vec2& pos) { render_pos_ = pos; }
     const Vec2& get_render_pos() const { return render_pos_; }

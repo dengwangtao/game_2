@@ -94,7 +94,7 @@ s32 Player::init()
 
 
     // 添加HUD
-    HudStats::add_hud_stats(
+    HUDStats::add_hud_stats(
         game_.get_curr_scene(),
         this,
         Vec2{20, 20},
@@ -152,16 +152,6 @@ s32 Player::update(s64 now_ms, s64 delta_ms)
 s32 Player::render()
 {
     Actor::render();
-
-#ifdef DWT_DEBUG
-    auto aabb = game_.GetCameraAABB();
-
-    LOG_TRACE("camera aabb=[{},{},{},{}], player pos=[{},{}]",
-             aabb.first.x, aabb.first.y, aabb.second.x, aabb.second.y,
-             pos().x, pos().y);
-
-    game_.draw_rect(get_render_pos(), {5, 5}, Color(255, 0, 0, 255));
-#endif
 
     return 0;
 }

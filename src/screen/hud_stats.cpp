@@ -3,7 +3,7 @@
 #include "core/scene.h"
 #include "core/actor.h"
 
-s32 HudStats::update(s64 now_ms, s64 delta_ms)
+s32 HUDStats::update(s64 now_ms, s64 delta_ms)
 {
     ObjectScreen::update(now_ms, delta_ms);
 
@@ -45,7 +45,7 @@ s32 HudStats::update(s64 now_ms, s64 delta_ms)
     return 0;
 }
 
-s32 HudStats::render()
+s32 HUDStats::render()
 {
     ObjectScreen::render();
 
@@ -99,7 +99,7 @@ s32 HudStats::render()
     return 0;
 }
 
-void HudStats::bind_stats(f32* hp, f32* max_hp, f32* mana, f32* max_mana)
+void HUDStats::bind_stats(f32* hp, f32* max_hp, f32* mana, f32* max_mana)
 {
     hp_ = hp;
     max_hp_ = max_hp;
@@ -107,14 +107,14 @@ void HudStats::bind_stats(f32* hp, f32* max_hp, f32* mana, f32* max_mana)
     max_mana_ = max_mana;
 }
 
-HudStats* HudStats::add_hud_stats(
+HUDStats* HUDStats::add_hud_stats(
     Object* parent, Actor* target,
     const Vec2& screen_pos,
     const std::array<String, LEN_HUDSTAT_TYPE>& file_paths,
     f32* hp, f32* max_hp, f32* mana, f32* max_mana
 )
 {
-    HudStats* hud_stats = new HudStats();
+    HUDStats* hud_stats = new HUDStats();
     hud_stats->init();
 
     for (size_t i = 0; i < LEN_HUDSTAT_TYPE; ++i)
